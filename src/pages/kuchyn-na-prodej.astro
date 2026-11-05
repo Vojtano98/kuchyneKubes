@@ -77,12 +77,12 @@ const equipment = [
 </Base>
 
 <style>
-  .offer { padding: calc(var(--header-h) + clamp(2.5rem, 5vw, 4rem)) 0 clamp(4rem, 8vw, 6.5rem); }
+  .offer { padding: calc(var(--header-h) + clamp(1.75rem, 4vw, 3rem)) 0 clamp(2.5rem, 5vw, 4rem); }
   .offer h1 { font-size: clamp(1.9rem, 3.3vw, 2.75rem); }
   .offer .lead { margin-bottom: 1.8rem; }
-  .offer-gallery { padding-top: clamp(4rem, 8vw, 6rem); }
+  .offer-gallery { padding-top: clamp(2.5rem, 5vw, 3.5rem); }
   .offer-gallery__head h2 { margin-bottom: 0.3em; }
-  .offer__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+  .offer__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.75rem, 4vw, 3.5rem); align-items: start; }
   .offer__media { position: sticky; top: calc(var(--header-h) + 1.5rem); }
   .offer__media { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
   .offer__media img { width: 100%; }
@@ -97,11 +97,11 @@ const equipment = [
   .offer__prices strong { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; color: var(--gold-dark); letter-spacing: -0.02em; }
   .offer__note { font-size: 0.9rem; color: var(--muted); margin-top: 0.8rem; }
   .offer__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .offer__equip { margin-top: clamp(3rem, 6vw, 5rem); padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .offer__equip { margin-top: clamp(2rem, 4vw, 3rem); padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: var(--radius-lg); }
   .offer__equip ul { list-style: none; padding: 0; margin: 0; columns: 2 280px; column-gap: 2rem; }
   .offer__equip li { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.45rem 0; break-inside: avoid; }
   .offer__equip svg { color: var(--gold); flex: none; margin-top: 0.3em; }
-  .interest__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+  .interest__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.75rem, 4vw, 3.5rem); align-items: center; }
   .interest .lead a { color: var(--gold-dark); font-weight: 500; }
   .interest__card { background: var(--cream); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); }
   @media (max-width: 900px) { .offer__grid, .interest__grid { grid-template-columns: 1fr; } .offer__media { position: relative; top: auto; } }

@@ -15,7 +15,7 @@
   --radius-lg: 22px;
   --shadow: 0 20px 50px -20px rgba(21, 18, 14, 0.35);
   --container: 1240px;
-  --gutter: clamp(1.25rem, 5vw, 4.5rem);
+  --gutter: clamp(1.25rem, 3.5vw, 2.5rem);
   --header-h: 84px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --font: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -107,7 +107,7 @@ strong {
 }
 
 .section {
-  padding-block: clamp(4.5rem, 10vw, 8.5rem);
+  padding-block: clamp(3rem, 6vw, 5rem);
 }
 
 .section--cream {
@@ -275,7 +275,7 @@ strong {
 /* Section heading block */
 .section-head {
   max-width: 760px;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
 }
 .section-head h2 {
   margin-bottom: 0.4em;
@@ -301,13 +301,13 @@ strong {
 
 /* Page hero for subpages: text + photo side by side, no overlay */
 .page-hero {
-  padding: calc(var(--header-h) + clamp(2.5rem, 6vw, 4.5rem)) 0 clamp(3rem, 7vw, 5.5rem);
+  padding: calc(var(--header-h) + clamp(1.75rem, 4vw, 3rem)) 0 clamp(2rem, 4.5vw, 3.5rem);
   background: var(--cream);
 }
 .page-hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(2rem, 6vw, 5rem);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
   align-items: center;
 }
 .page-hero__grid--text {
