@@ -59,6 +59,9 @@ const path = Astro.url.pathname;
     border-color: transparent;
     color: #fff;
   }
+  /* Over the hero photo the CTA is a quiet white outline; it turns gold once the header is solid */
+  .header--transparent:not(.is-scrolled):not(.is-open) .header__cta { --bg: transparent; --fg: #fff; border-color: rgba(255, 255, 255, 0.6); box-shadow: none; }
+  .header--transparent:not(.is-scrolled):not(.is-open) .header__cta:hover { --bg: #fff; --fg: var(--ink); border-color: #fff; }
   /* Compact header after leaving the hero: smaller height and logo, always visible */
   .header.is-compact { height: var(--header-h-compact); box-shadow: 0 10px 30px -22px rgba(21, 18, 14, 0.45); }
   .header.is-compact .header__logo { padding: 3px 0; border-radius: 0; box-shadow: none; background: transparent; }
