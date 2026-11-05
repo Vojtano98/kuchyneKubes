@@ -59,6 +59,18 @@ const path = Astro.url.pathname.slice(import.meta.env.BASE_URL.length - 1) || '/
     border-color: transparent;
     color: #fff;
   }
+  /* Soft black fade from the top edge behind the menu over the hero photo; fades out once the header turns solid */
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 -55%;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(8, 7, 6, 0.42) 0%, rgba(8, 7, 6, 0.2) 50%, rgba(8, 7, 6, 0.06) 80%, rgba(8, 7, 6, 0) 100%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .header--transparent:not(.is-scrolled):not(.is-open)::before { opacity: 1; }
   /* Over the hero photo the CTA is a quiet white outline; it turns gold once the header is solid */
   .header--transparent:not(.is-scrolled):not(.is-open) .header__cta { --bg: transparent; --fg: #fff; border-color: rgba(255, 255, 255, 0.6); box-shadow: none; }
   .header--transparent:not(.is-scrolled):not(.is-open) .header__cta:hover { --bg: #fff; --fg: var(--ink); border-color: #fff; }
