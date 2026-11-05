@@ -78,7 +78,7 @@ const slides = [
   @keyframes hero-progress { to { transform: scaleX(1); } }
   .hero__arrows { display: flex; gap: 0.6rem; }
   .hero__arrows button { width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.04); color: #fff; display: grid; place-items: center; cursor: pointer; transition: background 0.3s, border-color 0.3s; }
-  .hero__arrows button:hover { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--ink); }
+  .hero__arrows button:hover { background: var(--gold-fill); border-color: var(--gold-fill); color: #fff; }
   .hero__pause :global(.i-play), .hero__pause[aria-pressed='true'] :global(.i-pause) { display: none; }
   .hero__pause[aria-pressed='true'] :global(.i-play) { display: block; }
   .hero__scroll { position: absolute; z-index: 2; left: 50%; bottom: 2rem; width: 26px; height: 42px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 20px; transform: translateX(-50%); }

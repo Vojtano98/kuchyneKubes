@@ -7,9 +7,9 @@
   --gold-light: #d7ac56;
   --gold-dark: #6f521c;
   --gold-brand: #c19031;
-  /* Gold fills (buttons, active states): bright brand gold with dark text, 6.5 : 1 */
+  /* Gold fills (buttons, active states): bright brand gold with white text */
   --gold-fill: #c19031;
-  --gold-fill-hover: #d7ac56;
+  --gold-fill-hover: #a87b28;
   --cream: #f7f2ea;
   --sand: #ebe2d3;
   --paper: #fffdf9;
@@ -156,7 +156,7 @@ strong {
 
 .btn {
   --bg: var(--gold-fill);
-  --fg: var(--ink);
+  --fg: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
