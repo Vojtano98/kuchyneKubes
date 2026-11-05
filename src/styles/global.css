@@ -16,9 +16,11 @@
   --muted: #6b6359;
   --text: #2b2620;
   --line: rgba(21, 18, 14, 0.12);
-  --radius: 14px;
-  --radius-lg: 22px;
-  --shadow: 0 20px 50px -20px rgba(21, 18, 14, 0.35);
+  /* Premium = restrained: small radii, soft shadows */
+  --radius: 6px;
+  --radius-lg: 10px;
+  --radius-btn: 2px;
+  --shadow: 0 24px 48px -32px rgba(21, 18, 14, 0.35);
   --container: 1240px;
   --gutter: clamp(1.25rem, 3.5vw, 2.5rem);
   --header-h: 84px;
@@ -168,16 +170,20 @@ strong {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
-  padding: 1rem 1.8rem;
-  border-radius: 999px;
+  gap: 0.7rem;
+  min-height: 48px;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-btn);
   border: 1px solid var(--bg);
   background: var(--bg);
   color: var(--fg);
   font: inherit;
-  font-size: 0.95rem;
+  font-size: 0.74rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
   transition:
@@ -189,14 +195,13 @@ strong {
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px -12px rgba(193, 144, 49, 0.65);
   --bg: var(--gold-fill-hover);
 }
 
 .btn svg {
-  width: 1.1em;
-  height: 1.1em;
+  width: 1.35em;
+  height: 1.35em;
+  flex: none;
   transition: transform 0.4s var(--ease);
 }
 
@@ -235,7 +240,6 @@ strong {
 }
 .btn--dark:hover {
   --bg: var(--ink-3);
-  box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.5);
 }
 
 .link-arrow {
@@ -459,4 +463,15 @@ strong {
 .section--dark .eyebrow,
 .section--dark .link-arrow {
   color: var(--gold-light);
+}
+
+@media (max-width: 560px) {
+  body {
+    font-size: 1rem;
+  }
+  .btn {
+    min-height: 46px;
+    padding: 0.8rem 1.25rem;
+    letter-spacing: 0.16em;
+  }
 }

@@ -4,7 +4,9 @@ import Icon from './Icon.astro';
 import { categories } from '../data/categories';
 import { folder } from '../lib/images';
 const imgs = folder('sluzby');
-const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img: imgs[i], count: folder(c.slug).length }));
+// Kitchen panel uses a stronger photo than the original (the old one is already in the hero slider)
+const override: Record<string, ImageMetadata> = { kuchyne: folder('kuchyne')[176] };
+const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img: override[c.slug] ?? imgs[i], count: folder(c.slug).length }));
 ---
 <section class="section section--dark services" id="sluzby">
   <div class="container">
@@ -45,21 +47,17 @@ const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img:
 </section>
 
 <style>
-  .tabs { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
-  .tabs__list {
-    display: inline-flex; gap: 0.35rem; padding: 0.35rem; border-radius: 999px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    max-width: 100%; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity;
-  }
+  .tabs { margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem); }
+  .tabs__list { display: flex; gap: clamp(1.25rem, 2.6vw, 2.5rem); border-bottom: 1px solid rgba(255,255,255,0.12); overflow-x: auto; scrollbar-width: none; }
   .tabs__list::-webkit-scrollbar { display: none; }
   .tabs__list button {
-    flex: none; scroll-snap-align: center; font: inherit; font-size: 0.95rem; font-weight: 400;
-    color: #c9bfb0; background: transparent; border: 0; border-radius: 999px;
-    padding: 0.75rem 1.35rem; cursor: pointer; white-space: nowrap;
-    transition: background 0.3s, color 0.3s;
+    position: relative; flex: none; font: inherit; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #a99f90; background: none; border: 0; padding: 1.1rem 0; cursor: pointer; white-space: nowrap; transition: color 0.3s;
   }
-  .tabs__list button:hover { color: #fff; background: rgba(255,255,255,0.06); }
-  .tabs__list button[aria-selected='true'] { background: var(--gold-fill); color: #fff; font-weight: 500; }
+  .tabs__list button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--gold-light); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
+  .tabs__list button:hover { color: #fff; }
+  .tabs__list button[aria-selected='true'] { color: #fff; }
+  .tabs__list button[aria-selected='true']::after { transform: scaleX(1); }
 
   .panel { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(1.75rem, 4.5vw, 4rem); align-items: center; animation: panel-in 0.7s var(--ease); }
   .panel__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); }
@@ -75,8 +73,9 @@ const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img:
     .panel__img { aspect-ratio: 16 / 11; }
   }
   @media (max-width: 640px) {
-    .tabs__list { display: grid; grid-template-columns: 1fr 1fr; border-radius: 20px; width: 100%; }
-    .tabs__list button { border-radius: 14px; padding: 0.7rem 0.6rem; font-size: 0.9rem; }
+    .tabs__list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.25rem; border-bottom: 0; }
+    .tabs__list button { text-align: left; padding: 0.95rem 0; border-bottom: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; letter-spacing: 0.16em; }
+    .tabs__list button::after { bottom: -1px; }
   }
 </style>
 

@@ -1,6 +1,8 @@
 export type Category = {
   slug: string;
   name: string;
+  /** Indexes of the strongest photos, shown first in the gallery */
+  featured?: number[];
   /** Label used in the services tabs on the homepage */
   service?: { title: string; paragraphs: string[] };
 };
@@ -10,6 +12,7 @@ export const categories: Category[] = [
   {
     slug: 'kuchyne',
     name: 'Kuchyně',
+    featured: [173, 77, 88, 129, 176, 185, 81, 67, 96, 33, 23, 41, 12, 101, 106, 180],
     service: {
       title: 'Kuchyňský nábytek na míru vašim potřebám',
       paragraphs: [

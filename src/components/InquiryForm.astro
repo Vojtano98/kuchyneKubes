@@ -2,7 +2,7 @@
 import Icon from './Icon.astro';
 import { site } from '../data/site';
 interface Props { name?: string; withName?: boolean; withMessage?: boolean; submitLabel?: string; subject?: string; messageLabel?: string; note?: string }
-const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'Odeslat nezávaznou poptávku', subject = 'Nová poptávka z webu kuchynekubes.cz', messageLabel = 'Sdělte nám vaši představu realizace', note = 'Odesláním poptávky souhlasíte se zpracováním osobních údajů' } = Astro.props;
+const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'Odeslat poptávku', subject = 'Nová poptávka z webu kuchynekubes.cz', messageLabel = 'Sdělte nám vaši představu realizace', note = 'Odesláním poptávky souhlasíte se zpracováním osobních údajů' } = Astro.props;
 ---
 <form class="form" name={name} method="POST" action="/dekujeme/" data-netlify="true" netlify-honeypot="bot-field" data-form>
   <input type="hidden" name="form-name" value={name} />
@@ -41,7 +41,7 @@ const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'O
   .field--full { grid-column: 1 / -1; }
   .field input, .field textarea {
     width: 100%; font: inherit; font-weight: 400; font-size: 1rem; color: var(--ink);
-    background: var(--paper); border: 1px solid rgba(21,18,14,0.16); border-radius: 12px; padding: 1.55rem 1.1rem 0.6rem;
+    background: var(--paper); border: 1px solid rgba(21,18,14,0.16); border-radius: var(--radius-btn); padding: 1.55rem 1.1rem 0.6rem;
     transition: border-color 0.3s, box-shadow 0.3s; resize: vertical;
   }
   .field textarea { min-height: 150px; }
@@ -52,9 +52,9 @@ const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'O
   .field input:user-invalid { border-color: #c0392b; }
   .form__note { font-size: 0.82rem; color: var(--muted); margin: 1rem 0 1.4rem; }
   .form__note a { color: var(--gold-dark); }
-  .form__submit { width: 100%; padding-block: 1.15rem; font-size: 1rem; }
+  .form__submit { width: 100%; min-height: 52px; }
   .form__submit[disabled] { opacity: 0.6; pointer-events: none; }
-  .form__status:not(:empty) { margin-top: 1rem; padding: 1rem 1.2rem; border-radius: 12px; font-weight: 400; }
+  .form__status:not(:empty) { margin-top: 1rem; padding: 1rem 1.2rem; border-radius: var(--radius-btn); font-weight: 400; }
   .form__status.is-ok { background: #edf6ea; color: #24572b; }
   .form__status.is-error { background: #fbeceb; color: #8c2a20; }
   @media (max-width: 560px) { .form__grid { grid-template-columns: 1fr; } }
