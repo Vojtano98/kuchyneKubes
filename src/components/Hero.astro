@@ -52,6 +52,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
   /* slow cinematic push-in */
   .hero__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: transform 6s cubic-bezier(0.25, 0.1, 0.25, 1); }
   .is-active .hero__media img { transform: scale(1.02); }
+  /* The first slide is active straight from the HTML, so the transition never runs: play the same zoom as a keyframe */
+  .hero__slide:first-child.is-active .hero__media img { animation: hero-zoom 6s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
+  @keyframes hero-zoom { from { transform: scale(1.1); } to { transform: scale(1.02); } }
   /* modern black fade rising from the bottom (eased stops, no visible band) + a faint warm gold glow under the text;
      a light top shade keeps the transparent header readable. The photo stays the hero. */
   .hero__media::after {
