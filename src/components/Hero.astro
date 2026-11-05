@@ -4,11 +4,13 @@ import Icon from './Icon.astro';
 import { folder } from '../lib/images';
 
 const imgs = folder('hero');
-// Slides taken over from the original website (same order, texts and targets).
+const kitchens = folder('kuchyne');
+const living = folder('obyvaci-pokoje');
+// Texts and targets taken over from the original website; photos swapped for the sharpest modern realizations.
 const slides = [
-  { img: imgs[1], kicker: 'Kuchyně na míru', title: 'Tvoříme kuchyně na míru vašim představám', link: ['Prohlédnout realizace', '/realizace/'] },
-  { img: imgs[2], kicker: 'Realizace', title: 'Kuchyně propracované do posledního detailu', link: ['Dokončené realizace', '/realizace/'] },
-  { img: imgs[3], kicker: 'Obývací stěny na míru', title: 'Kuchyně i obývací stěny na míru', link: ['Prohlédnout realizace', '/realizace/#obyvaci-pokoje'] },
+  { img: kitchens[173], kicker: 'Kuchyně na míru', title: 'Tvoříme kuchyně na míru vašim představám', link: ['Prohlédnout realizace', '/realizace/'] },
+  { img: kitchens[41], kicker: 'Realizace', title: 'Kuchyně propracované do posledního detailu', link: ['Dokončené realizace', '/realizace/'] },
+  { img: living[9], kicker: 'Obývací stěny na míru', title: 'Kuchyně i obývací stěny na míru', link: ['Prohlédnout realizace', '/realizace/#obyvaci-pokoje'] },
   { img: imgs[4], kicker: 'Akční nabídka', title: 'Vystavená kuchyň na prodej za akční cenu', link: ['Prohlédnout zblízka', '/kuchyn-na-prodej/'] },
 ];
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -50,20 +52,24 @@ const pad = (n: number) => String(n).padStart(2, '0');
   /* slow cinematic push-in */
   .hero__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: transform 6s cubic-bezier(0.25, 0.1, 0.25, 1); }
   .is-active .hero__media img { transform: scale(1.02); }
-  /* soft vignette + gentle strip under the centred text; the photo stays the hero */
+  /* modern black fade rising from the bottom (eased stops, no visible band) + a faint warm gold glow under the text;
+     a light top shade keeps the transparent header readable. The photo stays the hero. */
   .hero__media::after {
     content: ''; position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 85% 70% at 50% 45%, rgba(15, 12, 9, 0) 55%, rgba(15, 12, 9, 0.38) 100%),
-      linear-gradient(0deg, rgba(15, 12, 9, 0.6) 0%, rgba(15, 12, 9, 0.26) 32%, rgba(15, 12, 9, 0) 56%),
-      linear-gradient(180deg, rgba(15, 12, 9, 0.32) 0%, rgba(15, 12, 9, 0) 18%);
+      radial-gradient(ellipse 55% 32% at 50% 100%, rgba(193, 144, 49, 0.16) 0%, rgba(193, 144, 49, 0) 70%),
+      linear-gradient(0deg, rgba(8, 7, 6, 0.86) 0%, rgba(8, 7, 6, 0.66) 16%, rgba(8, 7, 6, 0.4) 34%, rgba(8, 7, 6, 0.16) 52%, rgba(8, 7, 6, 0.04) 66%, rgba(8, 7, 6, 0) 78%),
+      linear-gradient(180deg, rgba(8, 7, 6, 0.38) 0%, rgba(8, 7, 6, 0) 20%);
   }
+  /* fine gold hairline closing the hero */
+  .hero::after { content: ''; position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold-line); opacity: 0.85; }
   .hero__content { position: relative; text-align: center; padding-bottom: clamp(6rem, 13vh, 8.5rem); text-shadow: 0 1px 18px rgba(0, 0, 0, 0.28); }
-  .hero__kicker { display: inline-flex; align-items: center; gap: 0.9rem; margin: 0 0 1.1rem; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(255, 255, 255, 0.88); }
-  .hero__kicker::before, .hero__kicker::after { content: ''; width: 2rem; height: 1px; background: rgba(255, 255, 255, 0.55); }
+  .hero__kicker { display: inline-flex; align-items: center; gap: 0.9rem; margin: 0 0 1.1rem; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-soft); }
+  .hero__kicker::before, .hero__kicker::after { content: ''; width: 2.4rem; height: 1px; background: linear-gradient(90deg, rgba(227, 199, 143, 0), var(--gold-soft)); }
+  .hero__kicker::after { transform: scaleX(-1); }
   .hero h1, .hero__title { font-size: clamp(2.1rem, 4.6vw, 4.1rem); font-weight: 300; line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch; margin: 0 auto 1.6rem; text-wrap: balance; }
-  .hero__link { display: inline-block; color: #fff; text-decoration: none; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; padding: 0.95rem 1.8rem; border: 1px solid rgba(255, 255, 255, 0.55); transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s; text-shadow: none; }
-  .hero__link:hover { background: #fff; color: var(--ink); border-color: #fff; }
+  .hero__link { display: inline-block; color: #fff; text-decoration: none; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; padding: 0.95rem 1.8rem; border: 1px solid rgba(227, 199, 143, 0.6); background: rgba(8, 7, 6, 0.18); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s var(--ease); text-shadow: none; }
+  .hero__link:hover { background: var(--gold-fill); color: #fff; border-color: var(--gold-fill); box-shadow: 0 14px 30px -14px rgba(193, 144, 49, 0.75); }
   .hero__content > * { opacity: 0; transform: translateY(16px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
   .is-active .hero__content > * { opacity: 1; transform: none; }
   .is-active .hero__content > :nth-child(1) { transition-delay: 0.35s; }
@@ -71,17 +77,17 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .is-active .hero__content > :nth-child(3) { transition-delay: 0.65s; }
   .hero__controls { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(1.6rem, 4.5vh, 2.6rem); display: flex; justify-content: center; align-items: center; gap: 1.2rem; }
   .hero__count { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.7); font-variant-numeric: tabular-nums; }
-  .hero__count b { font-weight: 500; color: #fff; }
-  .hero__count i { width: 1.2rem; height: 1px; background: rgba(255, 255, 255, 0.5); }
+  .hero__count b { font-weight: 500; color: var(--gold-soft); }
+  .hero__count i { width: 1.2rem; height: 1px; background: rgba(227, 199, 143, 0.55); }
   .hero__dots { display: flex; gap: 0.4rem; }
   .hero__dots button { background: none; border: 0; cursor: pointer; padding: 0.7rem 0; }
   .hero__dot-bar { display: block; width: clamp(26px, 3.2vw, 44px); height: 1px; background: rgba(255, 255, 255, 0.35); overflow: hidden; }
-  .hero__dot-bar i { display: block; height: 100%; width: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
+  .hero__dot-bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--gold-fill), var(--gold-soft)); transform: scaleX(0); transform-origin: left; }
   [aria-selected='true'] .hero__dot-bar i { animation: hero-progress var(--hero-duration, 7s) linear forwards; }
   .hero.is-paused [aria-selected='true'] .hero__dot-bar i { animation-play-state: paused; }
   @keyframes hero-progress { to { transform: scaleX(1); } }
   .hero__pause { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.4); background: transparent; color: #fff; display: grid; place-items: center; cursor: pointer; transition: background 0.3s, color 0.3s; }
-  .hero__pause:hover { background: #fff; color: var(--ink); }
+  .hero__pause:hover { background: var(--gold-fill); border-color: var(--gold-fill); color: #fff; }
   .hero__pause :global(.i-play), .hero__pause[aria-pressed='true'] :global(.i-pause) { display: none; }
   .hero__pause[aria-pressed='true'] :global(.i-play) { display: block; }
   @media (max-width: 760px) {
@@ -93,8 +99,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
     .hero__count { display: none; }
     .hero__media::after {
       background:
-        linear-gradient(0deg, rgba(15, 12, 9, 0.62) 0%, rgba(15, 12, 9, 0.25) 32%, rgba(15, 12, 9, 0) 52%),
-        linear-gradient(180deg, rgba(15, 12, 9, 0.3) 0%, rgba(15, 12, 9, 0) 18%);
+        radial-gradient(ellipse 90% 30% at 50% 100%, rgba(193, 144, 49, 0.14) 0%, rgba(193, 144, 49, 0) 70%),
+        linear-gradient(0deg, rgba(8, 7, 6, 0.88) 0%, rgba(8, 7, 6, 0.7) 20%, rgba(8, 7, 6, 0.4) 40%, rgba(8, 7, 6, 0.12) 60%, rgba(8, 7, 6, 0) 76%),
+        linear-gradient(180deg, rgba(8, 7, 6, 0.36) 0%, rgba(8, 7, 6, 0) 20%);
     }
   }
 </style>

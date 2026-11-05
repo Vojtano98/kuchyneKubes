@@ -6,13 +6,13 @@ import { folder } from '../lib/images';
 
 // Hand-picked photos (category, index in its folder) – the strongest shots across categories
 const picks: [string, number, string][] = [
-  ['kuchyne', 77, 'big'],
-  ['obyvaci-pokoje', 4, ''],
-  ['loznice', 15, ''],
-  ['chodby', 16, ''],
-  ['koupelny', 7, ''],
-  ['kuchyne', 129, 'wide'],
-  ['detske-pokoje', 0, ''],
+  ['kuchyne', 176, 'big'],
+  ['obyvaci-pokoje', 8, ''],
+  ['loznice', 10, ''],
+  ['chodby', 15, ''],
+  ['koupelny', 6, ''],
+  ['kuchyne', 33, 'wide'],
+  ['detske-pokoje', 25, ''],
   ['kuchyne', 81, ''],
 ];
 const name = (slug: string) => categories.find((c) => c.slug === slug)?.name ?? slug;
@@ -53,10 +53,11 @@ const total = Math.floor(categories.filter((c) => c.service).reduce((n, c) => n 
   .mosaic__item--wide { grid-column: span 2; }
   .mosaic a { position: relative; display: block; height: 100%; border-radius: var(--radius); overflow: hidden; background: var(--sand); color: #fff; text-decoration: none; isolation: isolate; transform: translateZ(0); }
   .mosaic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform 1.2s var(--ease); }
-  .mosaic a::after { content: ''; position: absolute; inset: auto 0 0; height: 45%; z-index: 1; background: linear-gradient(0deg, rgba(15, 12, 9, 0.5), rgba(15, 12, 9, 0)); }
+  .mosaic a::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: inherit; background: linear-gradient(0deg, rgba(8, 7, 6, 0.66) 0%, rgba(8, 7, 6, 0.28) 28%, rgba(8, 7, 6, 0) 52%); box-shadow: inset 0 0 0 1px rgba(227, 199, 143, 0); transition: box-shadow 0.5s var(--ease); }
+  .mosaic a:hover::after { box-shadow: inset 0 0 0 1px rgba(227, 199, 143, 0.85); }
   .mosaic a:hover img { transform: scale(1.05); }
   .mosaic__label { position: absolute; z-index: 2; left: clamp(0.8rem, 1.5vw, 1.1rem); bottom: clamp(0.7rem, 1.4vw, 1rem); display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.92rem; font-weight: 500; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3); }
-  .mosaic__label :global(svg) { transition: transform 0.4s var(--ease); }
+  .mosaic__label :global(svg) { color: var(--gold-soft); transition: transform 0.4s var(--ease); }
   .mosaic a:hover .mosaic__label :global(svg) { transform: translateX(3px); }
   .mosaic__item--big .mosaic__label { font-size: 1.15rem; }
   .realizace__cta { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin-top: clamp(2rem, 4vw, 3rem); }

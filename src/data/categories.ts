@@ -12,7 +12,7 @@ export const categories: Category[] = [
   {
     slug: 'kuchyne',
     name: 'Kuchyně',
-    featured: [173, 77, 88, 129, 176, 185, 81, 67, 96, 33, 23, 41, 12, 101, 106, 180],
+    featured: [173, 41, 176, 67, 0, 180, 81, 33, 185, 160, 77, 37, 94, 62, 129, 101, 88, 172],
     service: {
       title: 'Kuchyňský nábytek na míru vašim potřebám',
       paragraphs: [
@@ -24,6 +24,7 @@ export const categories: Category[] = [
   {
     slug: 'loznice',
     name: 'Ložnice',
+    featured: [16, 10, 15, 3, 22, 1, 9, 11],
     service: {
       title: 'Nábytek na míru do každé ložnice',
       paragraphs: [
@@ -36,6 +37,7 @@ export const categories: Category[] = [
   {
     slug: 'chodby',
     name: 'Chodby',
+    featured: [16, 15, 3, 0, 21, 33, 7, 20],
     service: {
       title: 'Nábytek na míru do velké i malé chodby',
       paragraphs: [
@@ -47,6 +49,7 @@ export const categories: Category[] = [
   {
     slug: 'koupelny',
     name: 'Koupelny',
+    featured: [7, 6, 0, 9, 11, 8],
     service: {
       title: 'Nábytek na míru do každé koupelny',
       paragraphs: [
@@ -58,6 +61,7 @@ export const categories: Category[] = [
   {
     slug: 'detske-pokoje',
     name: 'Dětské pokoje',
+    featured: [0, 25, 34, 32, 29, 22],
     service: {
       title: 'Nábytek na míru do velkého i malého dětského pokoje',
       paragraphs: [
@@ -69,6 +73,7 @@ export const categories: Category[] = [
   {
     slug: 'obyvaci-pokoje',
     name: 'Obývací pokoje',
+    featured: [3, 9, 8, 4, 0, 7, 2, 5, 6],
     service: {
       title: 'Nábytek na míru do každého obývacího pokoje',
       paragraphs: [

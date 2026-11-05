@@ -63,7 +63,7 @@ const path = Astro.url.pathname;
   .header--transparent:not(.is-scrolled):not(.is-open) .header__cta { --bg: transparent; --fg: #fff; border-color: rgba(255, 255, 255, 0.6); box-shadow: none; }
   .header--transparent:not(.is-scrolled):not(.is-open) .header__cta:hover { --bg: #fff; --fg: var(--ink); border-color: #fff; }
   /* Compact header after leaving the hero: smaller height and logo, always visible */
-  .header.is-compact { height: var(--header-h-compact); box-shadow: 0 10px 30px -22px rgba(21, 18, 14, 0.45); }
+  .header.is-compact { height: var(--header-h-compact); border-bottom-color: rgba(193, 144, 49, 0.22); box-shadow: 0 10px 30px -22px rgba(21, 18, 14, 0.45); }
   .header.is-compact .header__logo { padding: 3px 0; border-radius: 0; box-shadow: none; background: transparent; }
   .header.is-compact .header__logo img { height: 34px; }
   .header.is-compact .header__cta { min-height: 38px; padding: 0.5rem 1.05rem; }
@@ -78,13 +78,14 @@ const path = Astro.url.pathname;
     position: relative; text-decoration: none; font-size: 0.92rem; font-weight: 400; letter-spacing: 0.01em; padding: 0.4rem 0;
   }
   .header__nav a::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold);
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, var(--gold-fill), var(--gold-soft));
     transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease);
   }
   .header__nav a:hover::after, .header__nav a[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
   .header__actions { display: flex; align-items: center; gap: 1.2rem; }
   .header__phone { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 500; font-size: 0.92rem; white-space: nowrap; }
-  .header__phone svg { color: var(--gold); }
+  .header__phone svg { color: var(--gold-fill); }
+  .header--transparent:not(.is-scrolled):not(.is-open) .header__phone svg { color: var(--gold-soft); }
   .header__cta { min-height: 42px; padding: 0.65rem 1.2rem; font-size: 0.7rem; transition: padding 0.35s var(--ease), background 0.3s, transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
   .header__burger { display: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid color-mix(in srgb, currentColor 35%, transparent); background: none; color: inherit; cursor: pointer; place-items: center; transition: transform 0.35s var(--ease); }
   .burger-lines { display: grid; gap: 5px; width: 16px; }

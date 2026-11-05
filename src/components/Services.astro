@@ -3,10 +3,9 @@ import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { categories } from '../data/categories';
 import { folder } from '../lib/images';
-const imgs = folder('sluzby');
-// Kitchen panel uses a stronger photo than the original (the old one is already in the hero slider)
-const override: Record<string, ImageMetadata> = { kuchyne: folder('kuchyne')[176] };
-const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img: override[c.slug] ?? imgs[i], count: folder(c.slug).length }));
+// One modern, sharp realization per category (index in its folder)
+const photo: Record<string, number> = { kuchyne: 180, loznice: 16, chodby: 16, koupelny: 7, 'detske-pokoje': 0, 'obyvaci-pokoje': 3 };
+const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: folder(c.slug)[photo[c.slug] ?? 0], count: folder(c.slug).length }));
 ---
 <section class="section section--dark services" id="sluzby">
   <div class="container">
@@ -54,15 +53,15 @@ const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img:
     position: relative; flex: none; font: inherit; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
     color: #a99f90; background: none; border: 0; padding: 1.1rem 0; cursor: pointer; white-space: nowrap; transition: color 0.3s;
   }
-  .tabs__list button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--gold-light); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
+  .tabs__list button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: linear-gradient(90deg, var(--gold-fill), var(--gold-soft)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
   .tabs__list button:hover { color: #fff; }
   .tabs__list button[aria-selected='true'] { color: #fff; }
   .tabs__list button[aria-selected='true']::after { transform: scaleX(1); }
 
   .panel { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(1.75rem, 4.5vw, 4rem); align-items: center; animation: panel-in 0.7s var(--ease); }
-  .panel__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); }
+  .panel__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); box-shadow: 0 0 0 1px rgba(227, 199, 143, 0.18), 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
   .panel__img img { width: 100%; height: 100%; object-fit: cover; }
-  .panel__count { display: block; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+  .panel__count { display: block; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 1rem; }
   .panel__copy h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin-bottom: 0.8em; color: #fff; }
   .panel__copy p { color: #cfc6b8; }
   .panel__copy p:last-of-type { margin-bottom: 1.5rem; }
