@@ -18,10 +18,12 @@ const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: fo
     </div>
 
     <div class="tabs" data-reveal>
-      <div class="tabs__list" role="tablist" aria-label="Vyberte službu">
+      <p class="tabs__hint" id="tabs-hint">Vyberte, co vás zajímá</p>
+      <div class="tabs__list" role="tablist" aria-labelledby="tabs-hint">
         {services.map((s, i) => (
           <button type="button" role="tab" id={`tab-${s.slug}`} aria-controls={`panel-${s.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab>
-            {s.name}
+            <span class="tabs__name">{s.name}</span>
+            <span class="tabs__count" aria-label={`${s.count} fotografií`}>{s.count}</span>
           </button>
         ))}
       </div>
@@ -30,11 +32,11 @@ const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: fo
     <div class="panels">
       {services.map((s, i) => (
         <div class="panel" role="tabpanel" id={`panel-${s.slug}`} aria-labelledby={`tab-${s.slug}`} hidden={i !== 0} data-panel>
-          <div class="panel__img">
+          <a class="panel__img" href={`/realizace/#${s.slug}`}>
             <Image src={s.img!} alt={`${s.name} – nábytek na míru`} widths={[600, 900, 1300]} sizes="(max-width: 900px) 92vw, 640px" />
-          </div>
+            <span class="panel__more">Zobrazit {s.count} fotografií <Icon name="arrow" size={16} /></span>
+          </a>
           <div class="panel__copy">
-            <span class="panel__count">{s.count} fotografií v galerii</span>
             <h3>{s.service!.title}</h3>
             {s.service!.paragraphs.map((p) => <p>{p}</p>)}
             <a class="btn" href={`/realizace/#${s.slug}`}>Prohlédnout realizace <Icon name="arrow" /></a>
@@ -47,21 +49,26 @@ const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: fo
 
 <style>
   .tabs { margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem); }
-  .tabs__list { display: flex; gap: clamp(1.25rem, 2.6vw, 2.5rem); border-bottom: 1px solid rgba(255,255,255,0.12); overflow-x: auto; scrollbar-width: none; }
-  .tabs__list::-webkit-scrollbar { display: none; }
+  .tabs__hint { margin: 0 0 0.9rem; font-size: 0.82rem; color: #a99f90; }
+  /* Selectable chips: bordered, clearly clickable, the active one filled */
+  .tabs__list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
   .tabs__list button {
-    position: relative; flex: none; font: inherit; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #a99f90; background: none; border: 0; padding: 1.1rem 0; cursor: pointer; white-space: nowrap; transition: color 0.3s;
+    display: inline-flex; align-items: center; justify-content: space-between; gap: 0.9rem;
+    font: inherit; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap;
+    color: #d9d1c4; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.18); border-radius: var(--radius-btn);
+    padding: 0.85rem 1.1rem; min-height: 48px; cursor: pointer; transition: color 0.3s, background 0.3s, border-color 0.3s;
   }
-  .tabs__list button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: linear-gradient(90deg, var(--gold-fill), var(--gold-soft)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
-  .tabs__list button:hover { color: #fff; }
-  .tabs__list button[aria-selected='true'] { color: #fff; }
-  .tabs__list button[aria-selected='true']::after { transform: scaleX(1); }
+  .tabs__count { font-size: 0.68rem; letter-spacing: 0.04em; color: #8f8578; font-variant-numeric: tabular-nums; transition: color 0.3s; }
+  .tabs__list button:hover { color: #fff; border-color: rgba(255,255,255,0.45); }
+  .tabs__list button[aria-selected='true'] { color: #fff; background: var(--gold-fill); border-color: var(--gold-fill); }
+  .tabs__list button[aria-selected='true'] .tabs__count { color: rgba(255,255,255,0.85); }
 
   .panel { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(1.75rem, 4.5vw, 4rem); align-items: center; animation: panel-in 0.7s var(--ease); }
-  .panel__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); box-shadow: 0 0 0 1px rgba(227, 199, 143, 0.18), 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
-  .panel__img img { width: 100%; height: 100%; object-fit: cover; }
-  .panel__count { display: block; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 1rem; }
+  .panel__img { position: relative; display: block; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); box-shadow: 0 0 0 1px rgba(227, 199, 143, 0.18), 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
+  .panel__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
+  .panel__img:hover img { transform: scale(1.03); }
+  .panel__more { position: absolute; right: 0.9rem; bottom: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.9rem; background: rgba(15, 12, 9, 0.72); backdrop-filter: blur(6px); color: #fff; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; border-radius: var(--radius-btn); }
+  .panel__more :global(svg) { color: var(--gold-light); }
   .panel__copy h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin-bottom: 0.8em; color: #fff; }
   .panel__copy p { color: #cfc6b8; }
   .panel__copy p:last-of-type { margin-bottom: 1.5rem; }
@@ -72,9 +79,8 @@ const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: fo
     .panel__img { aspect-ratio: 16 / 11; }
   }
   @media (max-width: 640px) {
-    .tabs__list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.25rem; border-bottom: 0; }
-    .tabs__list button { text-align: left; padding: 0.95rem 0; border-bottom: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; letter-spacing: 0.16em; }
-    .tabs__list button::after { bottom: -1px; }
+    .tabs__list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .tabs__list button { padding: 0.75rem 0.8rem; font-size: 0.66rem; letter-spacing: 0.1em; gap: 0.5rem; }
   }
 </style>
 
