@@ -23,8 +23,8 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
   <div class="filters" data-filters>
     <div class="container">
       <div class="filters__scroll" role="toolbar" aria-label="Filtrovat realizace">
-        <button type="button" data-filter="vse" aria-pressed="true">Vše <span>{total}</span></button>
-        {groups.map((g) => <button type="button" data-filter={g.slug} aria-pressed="false">{g.name} <span>{g.items.length}</span></button>)}
+        {groups.map((g, i) => <button type="button" data-filter={g.slug} aria-pressed={i === 0 ? 'true' : 'false'}>{g.name} <span>{g.items.length}</span></button>)}
+        <button type="button" data-filter="vse" aria-pressed="false">Vše <span>{total}</span></button>
       </div>
     </div>
   </div>
@@ -123,7 +123,7 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
 
     const applyFilter = (slug: string, scroll = false) => {
       const valid = slug === 'vse' || groups.some((g) => g.dataset.group === slug);
-      if (!valid) slug = 'vse';
+      if (!valid) slug = groups[0].dataset.group!;
       groups.forEach((g) => (g.hidden = slug !== 'vse' && g.dataset.group !== slug));
       buttons.forEach((b) => {
         const on = b.dataset.filter === slug;
@@ -136,11 +136,11 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
       buttons.forEach((b) =>
         b.addEventListener('click', () => {
           const slug = b.dataset.filter!;
-          history.replaceState(null, '', slug === 'vse' ? location.pathname : `#${slug}`);
+          history.replaceState(null, '', slug === groups[0].dataset.group ? location.pathname : `#${slug}`);
           applyFilter(slug, true);
         }),
       );
-      const fromHash = () => applyFilter(decodeURIComponent(location.hash.slice(1)) || 'vse');
+      const fromHash = () => applyFilter(decodeURIComponent(location.hash.slice(1)) || groups[0].dataset.group!);
       window.addEventListener('hashchange', fromHash);
       fromHash();
       if (location.hash) requestAnimationFrame(() => root.scrollIntoView({ block: 'start' }));

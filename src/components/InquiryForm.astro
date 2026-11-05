@@ -1,8 +1,8 @@
 ---
 import Icon from './Icon.astro';
 import { site } from '../data/site';
-interface Props { name?: string; withName?: boolean; withMessage?: boolean; submitLabel?: string; subject?: string }
-const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'Odeslat nezávaznou poptávku', subject = 'Nová poptávka z webu kuchynekubes.cz' } = Astro.props;
+interface Props { name?: string; withName?: boolean; withMessage?: boolean; submitLabel?: string; subject?: string; messageLabel?: string; note?: string }
+const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'Odeslat nezávaznou poptávku', subject = 'Nová poptávka z webu kuchynekubes.cz', messageLabel = 'Sdělte nám vaši představu realizace', note = 'Odesláním poptávky souhlasíte se zpracováním osobních údajů' } = Astro.props;
 ---
 <form class="form" name={name} method="POST" action="/dekujeme/" data-netlify="true" netlify-honeypot="bot-field" data-form>
   <input type="hidden" name="form-name" value={name} />
@@ -26,11 +26,11 @@ const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'O
     {withMessage && (
       <div class="field field--full">
         <textarea id={`${name}-zprava`} name="zprava" rows="5" placeholder=" "></textarea>
-        <label for={`${name}-zprava`}>Sdělte nám vaši představu realizace</label>
+        <label for={`${name}-zprava`}>{messageLabel}</label>
       </div>
     )}
   </div>
-  <p class="form__note">Odesláním poptávky souhlasíte se zpracováním osobních údajů – <a href="/ochrana-osobnich-udaju/">Informace o zpracování osobních údajů</a>.</p>
+  <p class="form__note">{note} – <a href="/ochrana-osobnich-udaju/">Informace o zpracování osobních údajů</a>.</p>
   <button class="btn form__submit" type="submit"><span>{submitLabel}</span> <Icon name="arrow" /></button>
   <div class="form__status" role="status" aria-live="polite" data-status></div>
 </form>

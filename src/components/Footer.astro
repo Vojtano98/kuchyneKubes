@@ -3,8 +3,18 @@ import logoUrl from '../assets/img/brand/logo.svg?url';
 import Icon from './Icon.astro';
 import { site, branches } from '../data/site';
 const year = new Date().getFullYear();
+const showJob = !Astro.url.pathname.startsWith('/hledame-sikovneho-truhlare');
 ---
 <footer class="footer">
+  {showJob && (
+    <div class="container">
+      <a class="job-strip" href="/hledame-sikovneho-truhlare/">
+        <span class="job-strip__tag">Kariéra</span>
+        <span class="job-strip__text">Hledáme šikovného truhláře do našeho týmu</span>
+        <span class="job-strip__more">To mě zajímá <Icon name="arrow" size={16} /></span>
+      </a>
+    </div>
+  )}
   <div class="container footer__grid">
     <div class="footer__brand">
       <img src={logoUrl} alt={site.name} width="127" height="73" loading="lazy" />
@@ -20,7 +30,7 @@ const year = new Date().getFullYear();
         <li><a href="/kuchyn-na-prodej/">Kuchyň na prodej</a></li>
         <li><a href="/hledame-sikovneho-truhlare/">Hledáme truhláře</a></li>
         <li><a href="/#poptavka">Nezávazná poptávka</a></li>
-        <li><a href="/#pobocky">Pobočky</a></li>
+        <li><a href="/#kontakt">Kontakt</a></li>
       </ul>
     </div>
     <div>
@@ -44,6 +54,11 @@ const year = new Date().getFullYear();
 
 <style>
   .footer { background: var(--ink); color: #b9b0a2; padding: clamp(2.75rem, 5vw, 4rem) 0 1.75rem; font-size: 0.95rem; }
+  .job-strip { display: flex; align-items: center; gap: 0.8rem 1.2rem; flex-wrap: wrap; padding: 1rem 1.3rem; margin-bottom: clamp(2rem, 4vw, 3rem); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); color: #efe8dc; transition: border-color 0.3s, background 0.3s; }
+  .job-strip:hover { border-color: var(--gold); background: rgba(193,144,49,0.08); color: #fff; }
+  .job-strip__tag { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); background: var(--gold-light); border-radius: 999px; padding: 0.25rem 0.7rem; font-weight: 600; }
+  .job-strip__text { font-weight: 500; }
+  .job-strip__more { margin-left: auto; color: var(--gold-light); font-size: 0.92rem; }
   .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1.3fr 1.1fr; gap: 2.5rem; }
   .footer__brand img { height: 52px; width: auto; margin-bottom: 1.2rem; background: #fffdf9; border-radius: 12px; padding: 6px 10px; box-sizing: content-box; }
   .footer__brand p { max-width: 34ch; }

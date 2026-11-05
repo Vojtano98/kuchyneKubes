@@ -10,7 +10,6 @@ const slides = [
   { img: imgs[2], title: 'Kuchyně propracované do posledního detailu', primary: ['Nezávazná cenová nabídka', '#poptavka'], secondary: ['Dokončené realizace', '/realizace/'] },
   { img: imgs[3], title: 'Kuchyně i obývací stěny na míru', primary: ['Nezávazná poptávka', '#poptavka'], secondary: ['Prohlédnout realizace', '/realizace/#obyvaci-pokoje'] },
   { img: imgs[4], title: 'Vystavená kuchyň na prodej za akční cenu', primary: ['Prohlédnout zblízka', '/kuchyn-na-prodej/'], secondary: ['Dokončené realizace', '/realizace/'] },
-  { img: imgs[0], title: 'Hledáme šikovného truhláře', primary: ['To mě zajímá', '/hledame-sikovneho-truhlare/'], secondary: ['Naše práce', '/realizace/'] },
 ];
 ---
 <section class="hero" data-hero aria-roledescription="carousel" aria-label="Představení">
@@ -41,6 +40,7 @@ const slides = [
       ))}
     </div>
     <div class="hero__arrows">
+      <button type="button" class="hero__pause" data-pause aria-pressed="false" aria-label="Pozastavit prezentaci"><Icon name="pause" size={18} class="i-pause" /><Icon name="play" size={18} class="i-play" /></button>
       <button type="button" data-prev aria-label="Předchozí snímek"><Icon name="left" /></button>
       <button type="button" data-next aria-label="Další snímek"><Icon name="right" /></button>
     </div>
@@ -79,6 +79,8 @@ const slides = [
   .hero__arrows { display: flex; gap: 0.6rem; }
   .hero__arrows button { width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.04); color: #fff; display: grid; place-items: center; cursor: pointer; transition: background 0.3s, border-color 0.3s; }
   .hero__arrows button:hover { background: var(--gold); border-color: var(--gold); }
+  .hero__pause :global(.i-play), .hero__pause[aria-pressed='true'] :global(.i-pause) { display: none; }
+  .hero__pause[aria-pressed='true'] :global(.i-play) { display: block; }
   .hero__scroll { position: absolute; z-index: 2; left: 50%; bottom: 2rem; width: 26px; height: 42px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 20px; transform: translateX(-50%); }
   .hero__scroll span { position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: #fff; animation: scroll-dot 2s infinite; }
   @keyframes scroll-dot { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
@@ -106,6 +108,31 @@ const slides = [
     let remaining = DURATION;
     let started = 0;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const pauseBtn = hero.querySelector<HTMLButtonElement>('[data-pause]')!;
+    // Autoplay runs only when nothing holds it: user pause, mouse over, keyboard focus, hidden tab
+    const holds = new Set<string>(reduced ? ['user'] : []);
+
+    const tick = () => {
+      clearTimeout(timer);
+      hero.classList.toggle('is-paused', holds.size > 0);
+      if (holds.size > 0) return;
+      started = Date.now();
+      timer = window.setTimeout(() => go(current + 1), Math.max(remaining, 400));
+    };
+    const hold = (reason: string) => {
+      if (holds.size === 0 && timer !== undefined) remaining -= Date.now() - started;
+      holds.add(reason);
+      tick();
+    };
+    const release = (reason: string) => {
+      holds.delete(reason);
+      tick();
+    };
+    const setUserPaused = (paused: boolean) => {
+      pauseBtn.setAttribute('aria-pressed', String(paused));
+      pauseBtn.setAttribute('aria-label', paused ? 'Spustit prezentaci' : 'Pozastavit prezentaci');
+      paused ? hold('user') : release('user');
+    };
 
     const go = (n: number) => {
       const next = (n + slides.length) % slides.length;
@@ -117,27 +144,27 @@ const slides = [
         if (active) s.querySelectorAll('img').forEach((img) => (img.loading = 'eager'));
       });
       dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === next)));
-      // preload the following slide image
+      // restart the progress bar animation
+      dots[next]?.querySelector('i')?.getAnimations?.().forEach((a) => { a.cancel(); a.play(); });
       slides[(next + 1) % slides.length].querySelectorAll('img').forEach((img) => (img.loading = 'eager'));
       current = next;
-      schedule(DURATION);
+      remaining = DURATION;
+      tick();
     };
-    const schedule = (ms: number) => {
-      clearTimeout(timer);
-      if (reduced) return;
-      remaining = ms;
-      started = Date.now();
-      timer = window.setTimeout(() => go(current + 1), ms);
-    };
-    const pause = () => { clearTimeout(timer); remaining -= Date.now() - started; hero.classList.add('is-paused'); };
-    const resume = () => { hero.classList.remove('is-paused'); schedule(Math.max(remaining, 400)); };
 
     hero.querySelector('[data-prev]')?.addEventListener('click', () => go(current - 1));
     hero.querySelector('[data-next]')?.addEventListener('click', () => go(current + 1));
+    pauseBtn.addEventListener('click', () => setUserPaused(!holds.has('user')));
+    if (reduced) setUserPaused(true);
     dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
-    hero.addEventListener('focusin', pause);
-    hero.addEventListener('focusout', resume);
-    document.addEventListener('visibilitychange', () => (document.hidden ? pause() : resume()));
+    // pause while the pointer is over the texts/buttons or the controls (not the whole photo)
+    hero.querySelectorAll('.hero__content, .hero__controls').forEach((el) => {
+      el.addEventListener('mouseenter', () => hold('hover'));
+      el.addEventListener('mouseleave', () => release('hover'));
+    });
+    hero.addEventListener('focusin', (e) => { if ((e.target as HTMLElement).matches(':focus-visible')) hold('focus'); });
+    hero.addEventListener('focusout', () => release('focus'));
+    document.addEventListener('visibilitychange', () => (document.hidden ? hold('hidden') : release('hidden')));
 
     let x0: number | null = null;
     hero.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
@@ -149,6 +176,6 @@ const slides = [
     });
     // Preload slide 2 after first paint
     window.addEventListener('load', () => slides[1]?.querySelectorAll('img').forEach((img) => (img.loading = 'eager')));
-    schedule(DURATION);
+    tick();
   }
 </script>

@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+---
+<div class="mbar" data-mbar aria-label="Rychlý kontakt">
+  <a class="mbar__btn mbar__btn--call" href={site.phoneHref}><Icon name="phone" size={18} /> Zavolat</a>
+  <a class="mbar__btn mbar__btn--cta" href="/#poptavka">Nezávazná poptávka</a>
+</div>
+
+<style>
+  .mbar { display: none; }
+  @media (max-width: 760px) {
+    .mbar {
+      position: fixed; z-index: 45; left: 0.75rem; right: 0.75rem; bottom: calc(0.75rem + env(safe-area-inset-bottom));
+      display: grid; grid-template-columns: auto 1fr; gap: 0.5rem; padding: 0.45rem;
+      background: rgba(21, 18, 14, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-radius: 999px; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6);
+      transform: translateY(140%); transition: transform 0.45s var(--ease);
+    }
+    .mbar.is-visible { transform: none; }
+    .mbar__btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; border-radius: 999px; padding: 0.8rem 1.1rem; font-size: 0.92rem; font-weight: 500; text-decoration: none; }
+    .mbar__btn--call { color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); }
+    .mbar__btn--call :global(svg) { color: var(--gold-light); }
+    .mbar__btn--cta { background: var(--gold); color: #fff; }
+    :global(.footer) { padding-bottom: calc(6rem + env(safe-area-inset-bottom)) !important; }
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-mbar]');
+  if (bar) {
+    // Show after the first screen; hide while a form is on screen (it has its own buttons)
+    let formsInView = 0;
+    const update = () => bar.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.6 && formsInView === 0);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (formsInView += e.isIntersecting ? 1 : -1));
+      formsInView = Math.max(0, formsInView);
+      update();
+    });
+    document.querySelectorAll('[data-form]').forEach((f) => io.observe(f));
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

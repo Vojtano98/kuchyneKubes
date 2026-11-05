@@ -50,6 +50,5 @@ export const nav = [
   { href: '/#sluzby', label: 'Služby' },
   { href: '/realizace/', label: 'Realizace' },
   { href: '/kuchyn-na-prodej/', label: 'Kuchyň na prodej' },
-  { href: '/#pobocky', label: 'Pobočky' },
   { href: '/#kontakt', label: 'Kontakt' },
 ];

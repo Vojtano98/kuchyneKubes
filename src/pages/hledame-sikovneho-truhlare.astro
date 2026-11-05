@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
+import InquiryForm from '../components/InquiryForm.astro';
 import { folder } from '../lib/images';
 import { site } from '../data/site';
 const [banner] = folder('truhlar');
@@ -12,7 +13,7 @@ const [prodejna] = folder('onas');
 <Base title="Hledáme šikovného truhláře" description="Hledáme šikovného truhláře pro zakázkovou výrobu nábytku a kuchyní. Dílna a showroom ve Svinném u Chotěboře." image={banner} transparentHeader>
   <PageHero eyebrow="Kariéra" title="Hledáme šikovného truhláře" lead="Pro zakázkovou výrobu nábytku a kuchyní. Přidej se k týmu, který tvoří kuchyně srdcem." image={heroImg} imageAlt="Truhlář v kuchyni na míru" focus="70% 35%">
     <div class="job-hero__ctas">
-      <a class="btn" href={`mailto:${site.email}?subject=Z%C3%A1jem%20o%20pozici%20truhl%C3%A1%C5%99e`}>Napsat pár řádků o sobě <Icon name="arrow" /></a>
+      <a class="btn" href="#zajem">Mám zájem o práci <Icon name="arrow" /></a>
       <a class="btn btn--ghost" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
     </div>
   </PageHero>
@@ -49,10 +50,20 @@ const [prodejna] = folder('onas');
         <div>
           <h3>Kde pracujeme?</h3>
           <p>Naše dílna i showroom se nachází na adrese <strong>Svinný 82, 583 01 Chotěboř</strong>.</p>
-          <h3>Chceš se k nám přidat?</h3>
-          <p>Stačí nám poslat pár řádků o sobě na adresu <a href={`mailto:${site.email}`}>{site.email}</a> nebo nám rovnou zavolat na tel. číslo: <a href={site.phoneHref}>{site.phone}</a>.</p>
         </div>
         <figure class="job__photo"><Image src={prodejna} alt="Dílna a showroom Kuchyně Nábytek Kubeš, Svinný 82" widths={[470]} sizes="(max-width: 860px) 92vw, 470px" /><figcaption>Dílna a showroom, Svinný 82, Chotěboř</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream" id="zajem">
+    <div class="container job-form">
+      <div>
+        <h2 data-reveal>Chceš se k nám přidat?</h2>
+        <p class="lead" data-reveal>Stačí nám poslat pár řádků o sobě přes formulář nebo na adresu <a href={`mailto:${site.email}`}>{site.email}</a>, případně nám rovnou zavolat na tel. číslo: <a href={site.phoneHref}>{site.phone}</a>.</p>
+      </div>
+      <div class="job-form__card" data-reveal>
+        <InquiryForm name="truhlar" messageLabel="Pár řádků o sobě (zkušenosti, odkud jsi…)" submitLabel="Odeslat zájem o práci" subject="Zájem o pozici truhláře – kuchynekubes.cz" note="Odesláním souhlasíte se zpracováním osobních údajů" />
       </div>
     </div>
   </section>
@@ -61,6 +72,10 @@ const [prodejna] = folder('onas');
 <style>
   .job-hero__ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem; }
   .job__intro { max-width: 760px; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+  .job-form { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(1.75rem, 4vw, 3.5rem); align-items: start; }
+  .job-form .lead a { color: var(--gold-dark); font-weight: 500; }
+  .job-form__card { background: #fff; border-radius: var(--radius-lg); padding: clamp(1.5rem, 3.5vw, 2.5rem); box-shadow: 0 30px 60px -35px rgba(21, 18, 14, 0.35); }
+  @media (max-width: 860px) { .job-form { grid-template-columns: 1fr; } }
   .job__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 2rem); }
   .job__card { background: var(--cream); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); }
   .job__card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
