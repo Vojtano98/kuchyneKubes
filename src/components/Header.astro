@@ -50,28 +50,24 @@ const path = Astro.url.pathname;
     display: flex;
     align-items: center;
     color: var(--ink);
-    background: rgba(255, 253, 249, 0.86);
-    backdrop-filter: saturate(1.4) blur(14px);
-    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    background: var(--paper);
     border-bottom: 1px solid var(--line);
     transition: height 0.35s var(--ease), background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
   }
   .header--transparent:not(.is-scrolled):not(.is-open) {
     background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
     border-color: transparent;
     color: #fff;
   }
   /* Compact header after leaving the hero: smaller height and logo, always visible */
   .header.is-compact { height: var(--header-h-compact); box-shadow: 0 10px 30px -22px rgba(21, 18, 14, 0.45); }
-  .header.is-compact .header__logo { padding: 3px 8px; border-radius: 10px; }
+  .header.is-compact .header__logo { padding: 3px 0; border-radius: 0; box-shadow: none; background: transparent; }
   .header.is-compact .header__logo img { height: 34px; }
   .header.is-compact .header__cta { padding: 0.6rem 1.15rem; }
   .header.is-compact .header__burger, .header.is-compact .header__phone { transform: scale(0.88); }
   .header.is-compact + .mobile-menu { top: var(--header-h-compact); }
   .header__inner { display: flex; align-items: center; gap: 2rem; }
-  .header__logo { flex: none; display: block; background: #fffdf9; border-radius: 12px; padding: 5px 10px; box-shadow: 0 6px 20px -10px rgba(0,0,0,0.35); transition: padding 0.35s var(--ease), border-radius 0.35s; }
+  .header__logo { flex: none; display: block; background: #fffdf9; border-radius: 12px; padding: 5px 10px; box-shadow: 0 6px 20px -10px rgba(0,0,0,0.35); transition: padding 0.35s var(--ease), border-radius 0.35s, box-shadow 0.35s, background 0.35s; }
   .header__logo img { height: 48px; width: auto; transition: height 0.35s var(--ease); }
   .header__nav { margin-inline: auto; }
   .header__nav ul { display: flex; gap: clamp(1rem, 2vw, 2.1rem); list-style: none; margin: 0; padding: 0; }
