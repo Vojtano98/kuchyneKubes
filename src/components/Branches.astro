@@ -3,7 +3,9 @@ import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { branches, site } from '../data/site';
 import { folder } from '../lib/images';
-const photos: Record<string, ImageMetadata | undefined> = { chotebor: folder('onas')[0] };
+const photos: Record<string, ImageMetadata | undefined> = { chotebor: folder('onas')[0], pardubice: folder('vzorovy-byt')[0] };
+// Shop photo is portrait: keep the roof and sign in frame. The apartment photo stays centred.
+const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%' };
 ---
 <section class="section branches" id="pobocky">
   <span id="kontakt" class="anchor" aria-hidden="true"></span>
@@ -17,7 +19,7 @@ const photos: Record<string, ImageMetadata | undefined> = { chotebor: folder('on
       {branches.map((b, i) => (
         <article class="branch" data-reveal style={`--delay:${i * 0.1}s`}>
           <div class:list={['branch__map', { 'branch__map--photo': photos[b.id] }]} data-map={b.map}>
-            {photos[b.id] && <Image src={photos[b.id]!} alt={b.title} widths={[470]} sizes="(max-width: 860px) 92vw, 600px" />}
+            {photos[b.id] && <Image src={photos[b.id]!} alt={b.id === 'pardubice' ? 'Kuchyň s barovým pultem ve vzorovém bytě v Pardubicích' : b.title} style={`object-position:${focus[b.id]}`} widths={[470, 640]} sizes="(max-width: 860px) 92vw, 600px" />}
             {!photos[b.id] && <span class="branch__pin" aria-hidden="true"><Icon name="pin" size={30} /></span>}
             <button type="button" class="branch__mapbtn" data-map-load><Icon name="pin" size={16} /> Zobrazit mapu</button>
           </div>
@@ -56,7 +58,7 @@ const photos: Record<string, ImageMetadata | undefined> = { chotebor: folder('on
   .branch h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); margin-bottom: 1rem; }
   .branch__map { aspect-ratio: 3 / 2; background: var(--cream); position: relative; display: grid; place-items: center; overflow: hidden; }
   /* Portrait shop photo: frame the whole building (roof, sign, flag) and leave out the road below */
-  .branch__map img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+  .branch__map img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .branch__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .branch__pin { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--gold); box-shadow: 0 12px 30px -16px rgba(21,18,14,0.4); }
   .branch__pin svg { margin: 0; }
