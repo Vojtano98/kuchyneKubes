@@ -21,7 +21,7 @@ const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%
           <div class:list={['branch__map', { 'branch__map--photo': photos[b.id] }]} data-map={b.map}>
             {photos[b.id] && <Image src={photos[b.id]!} alt={b.id === 'pardubice' ? 'Kuchyň s barovým pultem ve vzorovém bytě v Pardubicích' : b.title} style={`object-position:${focus[b.id]}`} widths={[470, 640]} sizes="(max-width: 860px) 92vw, 600px" />}
             {!photos[b.id] && <span class="branch__pin" aria-hidden="true"><Icon name="pin" size={30} /></span>}
-            <button type="button" class="branch__mapbtn" data-map-load><Icon name="pin" size={16} /> Zobrazit mapu</button>
+            <button type="button" class="branch__mapbtn" data-map-load aria-pressed="false"><Icon name="pin" size={16} /> <span data-map-label>Zobrazit mapu</span></button>
           </div>
           <div class="branch__body">
             <h3>{b.title}</h3>
@@ -59,10 +59,12 @@ const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%
   .branch__map { aspect-ratio: 3 / 2; background: var(--cream); position: relative; display: grid; place-items: center; overflow: hidden; }
   /* Portrait shop photo: frame the whole building (roof, sign, flag) and leave out the road below */
   .branch__map img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .branch__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* The iframe is created by script, so it has no scoped attribute: style it globally */
+  .branch__map :global(iframe) { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; border: 0; }
+  .branch__map.is-map img, .branch__map.is-map .branch__pin { visibility: hidden; }
   .branch__pin { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--gold); box-shadow: 0 12px 30px -16px rgba(21,18,14,0.4); }
   .branch__pin svg { margin: 0; }
-  .branch__mapbtn { position: absolute; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: 0.45rem; font: inherit; font-size: 0.85rem; font-weight: 500; color: var(--ink); background: #fff; border: 0; border-radius: var(--radius-btn); padding: 0.6rem 1.05rem; cursor: pointer; box-shadow: 0 8px 24px -12px rgba(0,0,0,0.45); transition: background 0.3s, color 0.3s; }
+  .branch__mapbtn { position: absolute; z-index: 2; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: 0.45rem; font: inherit; font-size: 0.85rem; font-weight: 500; color: var(--ink); background: #fff; border: 0; border-radius: var(--radius-btn); padding: 0.6rem 1.05rem; cursor: pointer; box-shadow: 0 8px 24px -12px rgba(0,0,0,0.45); transition: background 0.3s, color 0.3s; }
   .branch__mapbtn:hover { background: var(--ink); color: #fff; }
   .branch__mapbtn svg { margin: 0; }
   .branch__body { padding: clamp(1.4rem, 3vw, 2.2rem); flex: 1; display: flex; flex-direction: column; }
@@ -79,15 +81,27 @@ const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%
 </style>
 
 <script>
+  // Toggle between the branch photo and the Google map (the map loads on first click only)
   document.querySelectorAll<HTMLElement>('[data-map]').forEach((box) => {
-    box.querySelector('[data-map-load]')?.addEventListener('click', () => {
-      const f = document.createElement('iframe');
-      f.src = box.dataset.map!;
-      f.title = 'Mapa';
-      f.loading = 'lazy';
-      f.referrerPolicy = 'no-referrer-when-downgrade';
-      f.allowFullscreen = true;
-      box.replaceChildren(f);
+    const btn = box.querySelector<HTMLButtonElement>('[data-map-load]');
+    const label = box.querySelector<HTMLElement>('[data-map-label]');
+    const hasPhoto = box.classList.contains('branch__map--photo');
+    btn?.addEventListener('click', () => {
+      let f = box.querySelector('iframe');
+      const showMap = !box.classList.contains('is-map');
+      if (showMap && !f) {
+        f = document.createElement('iframe');
+        f.src = box.dataset.map!;
+        f.title = 'Mapa';
+        f.loading = 'lazy';
+        f.referrerPolicy = 'no-referrer-when-downgrade';
+        f.allowFullscreen = true;
+        box.prepend(f);
+      }
+      if (f) f.hidden = !showMap;
+      box.classList.toggle('is-map', showMap);
+      btn.setAttribute('aria-pressed', String(showMap));
+      if (label) label.textContent = showMap ? (hasPhoto ? 'Zobrazit fotku' : 'Skrýt mapu') : 'Zobrazit mapu';
     });
   });
 </script>
