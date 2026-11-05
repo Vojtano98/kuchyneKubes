@@ -17,6 +17,7 @@
   --container: 1240px;
   --gutter: clamp(1.25rem, 3.5vw, 2.5rem);
   --header-h: 84px;
+  --header-h-compact: 64px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --font: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
@@ -33,7 +34,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 12px);
+  scroll-padding-top: calc(var(--header-h-compact) + 12px);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -369,9 +370,9 @@ strong {
   color: var(--gold);
 }
 
-/* Sticky elements sit below the header while it is visible */
-body:has(.header:not(.is-hidden)) .filters {
-  top: var(--header-h);
+/* Sticky elements sit below the (compact) header, which is always visible */
+.filters {
+  top: var(--header-h-compact) !important;
 }
 
 /* Subpage photo hero: full photo with a subtle dark strip behind the text */

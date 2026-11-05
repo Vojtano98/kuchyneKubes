@@ -54,7 +54,7 @@ const path = Astro.url.pathname;
     backdrop-filter: saturate(1.4) blur(14px);
     -webkit-backdrop-filter: saturate(1.4) blur(14px);
     border-bottom: 1px solid var(--line);
-    transition: background 0.4s, color 0.4s, border-color 0.4s, transform 0.5s var(--ease);
+    transition: height 0.35s var(--ease), background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
   }
   .header--transparent:not(.is-scrolled):not(.is-open) {
     background: transparent;
@@ -63,10 +63,16 @@ const path = Astro.url.pathname;
     border-color: transparent;
     color: #fff;
   }
-  .header.is-hidden { transform: translateY(-100%); }
+  /* Compact header after leaving the hero: smaller height and logo, always visible */
+  .header.is-compact { height: var(--header-h-compact); box-shadow: 0 10px 30px -22px rgba(21, 18, 14, 0.45); }
+  .header.is-compact .header__logo { padding: 3px 8px; border-radius: 10px; }
+  .header.is-compact .header__logo img { height: 34px; }
+  .header.is-compact .header__cta { padding: 0.6rem 1.15rem; }
+  .header.is-compact .header__burger, .header.is-compact .header__phone { transform: scale(0.88); }
+  .header.is-compact + .mobile-menu { top: var(--header-h-compact); }
   .header__inner { display: flex; align-items: center; gap: 2rem; }
-  .header__logo { flex: none; display: block; background: #fffdf9; border-radius: 12px; padding: 5px 10px; box-shadow: 0 6px 20px -10px rgba(0,0,0,0.35); }
-  .header__logo img { height: 48px; width: auto; }
+  .header__logo { flex: none; display: block; background: #fffdf9; border-radius: 12px; padding: 5px 10px; box-shadow: 0 6px 20px -10px rgba(0,0,0,0.35); transition: padding 0.35s var(--ease), border-radius 0.35s; }
+  .header__logo img { height: 48px; width: auto; transition: height 0.35s var(--ease); }
   .header__nav { margin-inline: auto; }
   .header__nav ul { display: flex; gap: clamp(1rem, 2vw, 2.1rem); list-style: none; margin: 0; padding: 0; }
   .header__nav a {
@@ -80,8 +86,8 @@ const path = Astro.url.pathname;
   .header__actions { display: flex; align-items: center; gap: 1.2rem; }
   .header__phone { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 500; font-size: 0.92rem; white-space: nowrap; }
   .header__phone svg { color: var(--gold); }
-  .header__cta { padding: 0.75rem 1.3rem; font-size: 0.88rem; }
-  .header__burger { display: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid currentColor; background: none; color: inherit; cursor: pointer; place-items: center; }
+  .header__cta { padding: 0.75rem 1.3rem; font-size: 0.88rem; transition: padding 0.35s var(--ease), background 0.3s, transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+  .header__burger { display: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid currentColor; background: none; color: inherit; cursor: pointer; place-items: center; transition: transform 0.35s var(--ease); }
   .burger-lines { display: grid; gap: 6px; width: 18px; }
   .burger-lines i { display: block; height: 1.5px; background: currentColor; transition: transform 0.4s var(--ease); }
   .is-open .burger-lines i:first-child { transform: translateY(3.75px) rotate(45deg); }
@@ -104,11 +110,12 @@ const path = Astro.url.pathname;
     .header__phone { width: 44px; height: 44px; justify-content: center; border-radius: 50%; border: 1px solid currentColor; }
   }
   @media (max-width: 1020px) {
-    :global(:root) { --header-h: 72px; }
+    :global(:root) { --header-h: 72px; --header-h-compact: 58px; }
     .header__nav, .header__cta { display: none; }
     .header__burger { display: grid; }
     .header__actions { margin-left: auto; }
     .header__logo img { height: 40px; }
+    .header.is-compact .header__logo img { height: 30px; }
   }
   @media (min-width: 1021px) { .mobile-menu { display: none !important; } }
 </style>
@@ -117,15 +124,20 @@ const path = Astro.url.pathname;
   const header = document.querySelector<HTMLElement>('[data-header]')!;
   const burger = header.querySelector<HTMLButtonElement>('[data-burger]')!;
   const menu = document.querySelector<HTMLElement>('[data-mobile-menu]')!;
-  let lastY = window.scrollY;
+  // Full-size header while the hero is on screen, compact (but always visible) below it
+  const hero = document.querySelector<HTMLElement>('main > .hero, main > .photo-hero');
+  let threshold = 40;
+  const measure = () => {
+    threshold = hero ? Math.max(40, hero.offsetHeight - header.offsetHeight - 40) : 40;
+  };
   const onScroll = () => {
     const y = window.scrollY;
     header.classList.toggle('is-scrolled', y > 40);
-    if (!header.classList.contains('is-open')) header.classList.toggle('is-hidden', y > 500 && y > lastY + 4);
-    if (y < lastY - 4) header.classList.remove('is-hidden');
-    lastY = y;
+    header.classList.toggle('is-compact', y > threshold);
   };
+  measure();
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { measure(); onScroll(); });
   onScroll();
   const setOpen = (open: boolean) => {
     header.classList.toggle('is-open', open);

@@ -74,7 +74,7 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
   .filters button[aria-pressed='true'] span { color: var(--gold-light); }
 
   .gallery { padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(3rem, 6vw, 4.5rem); }
-  .gallery__group { scroll-margin-top: calc(var(--header-h) + 80px); }
+  .gallery__group { scroll-margin-top: calc(var(--header-h-compact) + 80px); }
   .gallery__group + .gallery__group { margin-top: clamp(2.25rem, 4vw, 3.25rem); }
   .gallery__group[hidden] { display: none; }
   .gallery__head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
