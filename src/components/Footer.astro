@@ -3,7 +3,7 @@ import logoUrl from '../assets/img/brand/logo.svg?url';
 import Icon from './Icon.astro';
 import { site, branches } from '../data/site';
 const year = new Date().getFullYear();
-const showJob = !Astro.url.pathname.startsWith('/hledame-sikovneho-truhlare');
+const showJob = !Astro.url.pathname.includes('/hledame-sikovneho-truhlare');
 ---
 <footer class="footer">
   {showJob && (

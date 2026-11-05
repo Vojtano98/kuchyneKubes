@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 import { nav, site } from '../data/site';
 
 const { transparent = false } = Astro.props as { transparent?: boolean };
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.slice(import.meta.env.BASE_URL.length - 1) || '/';
 ---
 <header class:list={['header', { 'header--transparent': transparent }]} data-header>
   <div class="header__inner container">
