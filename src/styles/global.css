@@ -7,6 +7,9 @@
   --gold-light: #d7ac56;
   --gold-dark: #6f521c;
   --gold-brand: #c19031;
+  /* Gold fills (buttons, active states): bright brand gold with dark text, 6.5 : 1 */
+  --gold-fill: #c19031;
+  --gold-fill-hover: #d7ac56;
   --cream: #f7f2ea;
   --sand: #ebe2d3;
   --paper: #fffdf9;
@@ -152,8 +155,8 @@ strong {
 }
 
 .btn {
-  --bg: var(--gold);
-  --fg: #fff;
+  --bg: var(--gold-fill);
+  --fg: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -179,8 +182,8 @@ strong {
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -12px rgba(138, 103, 35, 0.7);
-  --bg: var(--gold-dark);
+  box-shadow: 0 14px 30px -12px rgba(193, 144, 49, 0.65);
+  --bg: var(--gold-fill-hover);
 }
 
 .btn svg {
@@ -220,6 +223,7 @@ strong {
 
 .btn--dark {
   --bg: var(--ink);
+  --fg: #fff;
 }
 .btn--dark:hover {
   --bg: var(--ink-3);

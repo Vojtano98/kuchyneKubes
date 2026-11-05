@@ -59,7 +59,7 @@ const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img:
     transition: background 0.3s, color 0.3s;
   }
   .tabs__list button:hover { color: #fff; background: rgba(255,255,255,0.06); }
-  .tabs__list button[aria-selected='true'] { background: var(--gold); color: #fff; }
+  .tabs__list button[aria-selected='true'] { background: var(--gold-fill); color: var(--ink); font-weight: 500; }
 
   .panel { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(1.75rem, 4.5vw, 4rem); align-items: center; animation: panel-in 0.7s var(--ease); }
   .panel__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); }
