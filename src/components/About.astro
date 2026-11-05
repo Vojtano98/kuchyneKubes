@@ -60,6 +60,16 @@ const kitchen = folder('kuchyne')[0];
   .contact-strip__title { font-size: clamp(1.35rem, 2.3vw, 1.85rem); font-weight: 300; letter-spacing: -0.02em; line-height: 1.25; color: var(--ink); margin: 0 0 0.3rem; }
   .contact-strip__text { margin: 0; color: var(--muted); }
   .contact-strip__actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  /* Phones: both buttons side by side, filling the row */
+  @media (max-width: 560px) {
+    .contact-strip { padding: 1.4rem 1.1rem 1.4rem 1.25rem; }
+    .contact-strip__actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .contact-strip__actions .btn { min-width: 0; padding: 0.7rem 0.5rem; font-size: 0.66rem; letter-spacing: 0.08em; gap: 0.4rem; white-space: normal; text-align: center; }
+    .contact-strip__actions .btn :global(svg) { width: 1.2em; height: 1.2em; }
+  }
+  @media (max-width: 360px) {
+    .contact-strip__actions .btn :global(svg) { display: none; }
+  }
   @media (max-width: 900px) {
     .about__grid { grid-template-columns: 1fr; }
     .about__media { max-width: 560px; }
