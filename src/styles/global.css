@@ -2,9 +2,11 @@
   --ink: #15120e;
   --ink-2: #221d17;
   --ink-3: #3a332a;
-  --gold: #c19031;
+  /* Brand gold darkened for WCAG AA: white text on it 5.2 : 1, as text on paper 5.1 : 1 */
+  --gold: #8a6723;
   --gold-light: #d7ac56;
-  --gold-dark: #9a7124;
+  --gold-dark: #6f521c;
+  --gold-brand: #c19031;
   --cream: #f7f2ea;
   --sand: #ebe2d3;
   --paper: #fffdf9;
@@ -177,7 +179,7 @@ strong {
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -12px rgba(193, 144, 49, 0.7);
+  box-shadow: 0 14px 30px -12px rgba(138, 103, 35, 0.7);
   --bg: var(--gold-dark);
 }
 
@@ -439,4 +441,10 @@ strong {
       linear-gradient(0deg, rgba(15, 12, 9, 0.66) 0%, rgba(15, 12, 9, 0.32) 50%, rgba(15, 12, 9, 0) 85%),
       linear-gradient(180deg, rgba(15, 12, 9, 0.35) 0%, rgba(15, 12, 9, 0) 22%);
   }
+}
+
+/* On dark backgrounds the lighter gold keeps enough contrast (8.8 : 1) */
+.section--dark .eyebrow,
+.section--dark .link-arrow {
+  color: var(--gold-light);
 }
