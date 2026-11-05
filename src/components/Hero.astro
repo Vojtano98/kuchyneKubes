@@ -6,10 +6,10 @@ import { folder } from '../lib/images';
 const imgs = folder('hero');
 // Slides taken over from the original website (same order, texts and targets).
 const slides = [
-  { img: imgs[1], title: 'Tvoříme kuchyně na míru vašim představám', primary: ['Nezávazná poptávka', '#poptavka'], secondary: ['Prohlédnout realizace', '/realizace/'] },
-  { img: imgs[2], title: 'Kuchyně propracované do posledního detailu', primary: ['Nezávazná cenová nabídka', '#poptavka'], secondary: ['Dokončené realizace', '/realizace/'] },
-  { img: imgs[3], title: 'Kuchyně i obývací stěny na míru', primary: ['Nezávazná poptávka', '#poptavka'], secondary: ['Prohlédnout realizace', '/realizace/#obyvaci-pokoje'] },
-  { img: imgs[4], title: 'Vystavená kuchyň na prodej za akční cenu', primary: ['Prohlédnout zblízka', '/kuchyn-na-prodej/'], secondary: ['Dokončené realizace', '/realizace/'] },
+  { img: imgs[1], title: 'Tvoříme kuchyně na míru vašim představám', link: ['Prohlédnout realizace', '/realizace/'] },
+  { img: imgs[2], title: 'Kuchyně propracované do posledního detailu', link: ['Dokončené realizace', '/realizace/'] },
+  { img: imgs[3], title: 'Kuchyně i obývací stěny na míru', link: ['Prohlédnout realizace', '/realizace/#obyvaci-pokoje'] },
+  { img: imgs[4], title: 'Vystavená kuchyň na prodej za akční cenu', link: ['Prohlédnout zblízka', '/kuchyn-na-prodej/'] },
 ];
 ---
 <section class="hero" data-hero aria-roledescription="carousel" aria-label="Představení">
@@ -17,15 +17,11 @@ const slides = [
     {slides.map((s, i) => (
       <div class:list={['hero__slide', { 'is-active': i === 0 }]} data-slide aria-hidden={i !== 0 ? 'true' : undefined}>
         <div class="hero__media">
-          <Image src={s.img} alt="" widths={[768, 1280, 1920, 2560]} sizes="100vw" loading={i === 0 ? 'eager' : 'lazy'} priority={i === 0} quality={72} />
+          <Image src={s.img} alt="" widths={[768, 1280, 1920, 2560]} sizes="100vw" loading={i === 0 ? 'eager' : 'lazy'} priority={i === 0} quality={75} />
         </div>
         <div class="container hero__content">
-          <p class="eyebrow">Truhlářství David Kubeš</p>
           {i === 0 ? <h1>{s.title}</h1> : <p class="hero__title">{s.title}</p>}
-          <div class="hero__ctas">
-            <a class="btn" href={s.primary[1]} tabindex={i === 0 ? undefined : -1}>{s.primary[0]} <Icon name="arrow" /></a>
-            <a class="btn btn--ghost" href={s.secondary[1]} tabindex={i === 0 ? undefined : -1}>{s.secondary[0]}</a>
-          </div>
+          <a class="hero__link" href={s.link[1]} tabindex={i === 0 ? undefined : -1}>{s.link[0]} <Icon name="arrow" size={18} /></a>
         </div>
       </div>
     ))}
@@ -34,65 +30,49 @@ const slides = [
     <div class="hero__dots" role="tablist" aria-label="Vybrat snímek">
       {slides.map((s, i) => (
         <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-label={`Snímek ${i + 1}: ${s.title}`} data-dot={i}>
-          <span class="hero__dot-num">{String(i + 1).padStart(2, '0')}</span>
           <span class="hero__dot-bar"><i></i></span>
         </button>
       ))}
     </div>
-    <div class="hero__arrows">
-      <button type="button" class="hero__pause" data-pause aria-pressed="false" aria-label="Pozastavit prezentaci"><Icon name="pause" size={18} class="i-pause" /><Icon name="play" size={18} class="i-play" /></button>
-      <button type="button" data-prev aria-label="Předchozí snímek"><Icon name="left" /></button>
-      <button type="button" data-next aria-label="Další snímek"><Icon name="right" /></button>
-    </div>
+    <button type="button" class="hero__pause" data-pause aria-pressed="false" aria-label="Pozastavit prezentaci"><Icon name="pause" size={16} class="i-pause" /><Icon name="play" size={16} class="i-play" /></button>
   </div>
-  <a href="#onas" class="hero__scroll" aria-label="Posunout dolů"><span></span></a>
 </section>
 
 <style>
-  .hero { position: relative; height: 100svh; min-height: 620px; max-height: 1100px; color: #fff; background: var(--ink); overflow: hidden; }
+  .hero { position: relative; height: 100svh; min-height: 560px; max-height: 1100px; color: #fff; background: var(--ink); overflow: hidden; }
   .hero__slides, .hero__slide { position: absolute; inset: 0; }
-  .hero__slide { opacity: 0; visibility: hidden; transition: opacity 0.9s var(--ease), visibility 0s 0.9s; display: flex; align-items: center; }
+  .hero__slide { opacity: 0; visibility: hidden; transition: opacity 0.9s var(--ease), visibility 0s 0.9s; display: flex; align-items: flex-end; }
   .hero__slide.is-active { opacity: 1; visibility: visible; transition: opacity 0.9s var(--ease), visibility 0s; z-index: 1; }
   .hero__media { position: absolute; inset: 0; }
-  .hero__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 5.5s linear; }
+  .hero__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); transition: transform 5.5s linear; }
   .is-active .hero__media img { transform: scale(1); }
-  .hero__content { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); }
-  .hero__content .btn { text-shadow: none; }
-  .hero__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(15, 12, 9, 0.5) 0%, rgba(15, 12, 9, 0.22) 40%, rgba(15, 12, 9, 0) 62%), linear-gradient(0deg, rgba(15, 12, 9, 0.4), rgba(15, 12, 9, 0) 30%), linear-gradient(180deg, rgba(15, 12, 9, 0.35), rgba(15, 12, 9, 0) 22%); }
-  .hero__content { position: relative; padding-top: var(--header-h); }
-  .hero__content .eyebrow { color: var(--gold-light); }
-  .hero h1, .hero__title { font-size: clamp(2.4rem, 6.2vw, 5rem); font-weight: 500; line-height: 1.04; letter-spacing: -0.03em; max-width: 14ch; margin: 0 0 2.2rem; text-wrap: balance; }
-  .hero__content > * { opacity: 0; transform: translateY(30px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+  /* Only a soft strip at the bottom (text) and top (menu) – the photo stays clean */
+  .hero__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(15, 12, 9, 0.5) 0%, rgba(15, 12, 9, 0.18) 24%, rgba(15, 12, 9, 0) 42%), linear-gradient(180deg, rgba(15, 12, 9, 0.3) 0%, rgba(15, 12, 9, 0) 18%); }
+  .hero__content { position: relative; padding-bottom: clamp(4.5rem, 9vh, 6.5rem); text-shadow: 0 1px 16px rgba(0, 0, 0, 0.3); }
+  .hero h1, .hero__title { font-size: clamp(1.9rem, 3.6vw, 3.1rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.025em; max-width: 19ch; margin: 0 0 1rem; text-wrap: balance; }
+  .hero__link { display: inline-flex; align-items: center; gap: 0.5rem; color: #fff; text-decoration: none; font-weight: 500; font-size: 0.98rem; padding-bottom: 0.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.6); transition: border-color 0.3s, gap 0.3s var(--ease); }
+  .hero__link:hover { border-color: #fff; gap: 0.8rem; }
+  .hero__content > * { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
   .is-active .hero__content > * { opacity: 1; transform: none; }
-  .is-active .hero__content > :nth-child(2) { transition-delay: 0.1s; }
-  .is-active .hero__content > :nth-child(3) { transition-delay: 0.2s; }
-  .hero__ctas { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .hero__controls { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(1.5rem, 5vh, 3rem); display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; }
-  .hero__dots { display: flex; gap: 1.1rem; }
-  .hero__dots button { background: none; border: 0; color: rgba(255,255,255,0.55); cursor: pointer; padding: 0.3rem 0; text-align: left; font: inherit; font-size: 0.78rem; letter-spacing: 0.12em; display: grid; gap: 0.5rem; }
-  .hero__dots button[aria-selected='true'] { color: #fff; }
-  .hero__dot-bar { display: block; width: clamp(34px, 6vw, 72px); height: 2px; background: rgba(255,255,255,0.25); overflow: hidden; }
-  .hero__dot-bar i { display: block; height: 100%; width: 100%; background: var(--gold-fill); transform: scaleX(0); transform-origin: left; }
+  .is-active .hero__content > :nth-child(2) { transition-delay: 0.12s; }
+  .hero__controls { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(1.5rem, 4vh, 2.25rem); display: flex; justify-content: flex-end; align-items: center; gap: 0.9rem; }
+  .hero__dots { display: flex; gap: 0.45rem; }
+  .hero__dots button { background: none; border: 0; cursor: pointer; padding: 0.6rem 0; }
+  .hero__dot-bar { display: block; width: clamp(22px, 3vw, 36px); height: 2px; background: rgba(255, 255, 255, 0.35); overflow: hidden; }
+  .hero__dot-bar i { display: block; height: 100%; width: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
   [aria-selected='true'] .hero__dot-bar i { animation: hero-progress var(--hero-duration, 7s) linear forwards; }
-  .hero.is-paused [aria-selected='true'] .hero__dot-bar i { animation-play-state: paused; }
+  .hero.is-paused [aria-selected='true'] .hero__dot-bar i { animation-play-state: paused; transform: scaleX(1); }
   @keyframes hero-progress { to { transform: scaleX(1); } }
-  .hero__arrows { display: flex; gap: 0.6rem; }
-  .hero__arrows button { width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.04); color: #fff; display: grid; place-items: center; cursor: pointer; transition: background 0.3s, border-color 0.3s; }
-  .hero__arrows button:hover { background: var(--gold-fill); border-color: var(--gold-fill); color: #fff; }
+  .hero__pause { width: 30px; height: 30px; border-radius: 50%; border: 0; background: transparent; color: rgba(255, 255, 255, 0.8); display: grid; place-items: center; cursor: pointer; transition: color 0.3s, background 0.3s; }
+  .hero__pause:hover { color: #fff; background: rgba(255, 255, 255, 0.12); }
   .hero__pause :global(.i-play), .hero__pause[aria-pressed='true'] :global(.i-pause) { display: none; }
   .hero__pause[aria-pressed='true'] :global(.i-play) { display: block; }
-  .hero__scroll { position: absolute; z-index: 2; left: 50%; bottom: 2rem; width: 26px; height: 42px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 20px; transform: translateX(-50%); }
-  .hero__scroll span { position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: #fff; animation: scroll-dot 2s infinite; }
-  @keyframes scroll-dot { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
   @media (max-width: 760px) {
-    .hero__scroll, .hero__dot-num { display: none; }
-    .hero__arrows button { width: 44px; height: 44px; }
-    .hero__dots { gap: 0.5rem; }
-    .hero__ctas { gap: 0.7rem; }
-    .hero__ctas .btn { flex: 1 1 100%; }
-    .hero h1, .hero__title { margin-bottom: 1.6rem; }
-    .hero__media::after { background: linear-gradient(0deg, rgba(15,12,9,0.72) 0%, rgba(15,12,9,0.3) 45%, rgba(15,12,9,0) 65%), linear-gradient(180deg, rgba(15,12,9,0.35), rgba(15,12,9,0) 20%); }
-    .hero__slide { align-items: flex-end; padding-bottom: 6.5rem; }
+    .hero { height: 88svh; }
+    .hero__content { padding-bottom: 4.25rem; }
+    .hero h1, .hero__title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+    .hero__controls { justify-content: flex-start; }
+    .hero__media::after { background: linear-gradient(0deg, rgba(15, 12, 9, 0.58) 0%, rgba(15, 12, 9, 0.22) 30%, rgba(15, 12, 9, 0) 50%), linear-gradient(180deg, rgba(15, 12, 9, 0.3) 0%, rgba(15, 12, 9, 0) 18%); }
   }
 </style>
 
