@@ -88,11 +88,19 @@ h4 {
   text-wrap: balance;
 }
 
+/* Premium headings: light cut like the hero (h1/h2 300, h3 400) */
 h1 {
   font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 300;
+  line-height: 1.08;
 }
 h2 {
   font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.1;
+}
+h3 {
+  font-weight: 400;
 }
 h3 {
   font-size: clamp(1.35rem, 2.2vw, 1.75rem);
@@ -128,10 +136,10 @@ strong {
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  font-size: 0.78rem;
+  gap: 0.9rem;
+  font-size: 0.74rem;
   font-weight: 500;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 1.2rem;
@@ -139,7 +147,7 @@ strong {
 
 .eyebrow::before {
   content: '';
-  width: 2.2rem;
+  width: 2rem;
   height: 1px;
   background: currentColor;
 }
