@@ -6,7 +6,7 @@ import { site } from '../data/site';
 const [prodejna] = folder('onas');
 const kitchen = folder('kuchyne')[0];
 ---
-<section class="section about" id="onas">
+<section class="section about about--compact" id="onas">
   <div class="container about__grid">
     <div class="about__media" data-reveal>
       <div class="about__img about__img--main">
@@ -19,15 +19,15 @@ const kitchen = folder('kuchyne')[0];
     </div>
     <div class="about__text">
       <p class="eyebrow" data-reveal>O nás</p>
-      <h2 data-reveal>Kvalitně odvedená práce je naší prioritou</h2>
-      <p data-reveal>Naši pracovníci jsou vyučeni v oboru a dbá se na to, aby se jejich kvalifikace neustále zvyšovala. Jsou to skuteční profesionálové ve svém oboru. Precizně odvedená kvalitní práce, kterou za sebou nechávají, je toho důkazem. K dobré práci samozřejmě patří také zásady jako je <strong>nenadhodnocování zakázek</strong>, práce s kvalitními materiály a doplňky.</p>
-      <p data-reveal>Na prvním místě jsou poctivé výrobky, které jsou samy o sobě vítanou reklamou a doporučením. Prioritou je samozřejmě spokojenost zákazníka – o naší kvalitě se nyní můžete přesvědčit osobně v našem <strong>vzorkovém kuchyňském studiu</strong>.</p>
+      <h2 data-reveal>Kuchyně a nábytek na míru z vlastní dílny</h2>
+      <p data-reveal>Jsme Truhlářství David Kubeš s dílnou a vzorkovým kuchyňským studiem ve Svinném u Chotěboře. Naši truhláři jsou vyučení v oboru a pracují s kvalitními materiály a doplňky. Zakázky nenadhodnocujeme – nejlepší reklamou jsou nám spokojení zákazníci.</p>
       <ul class="about__points" data-reveal>
         <li><Icon name="check" size={18} /> Vyučení truhláři</li>
-        <li><Icon name="check" size={18} /> Nenadhodnocené zakázky</li>
+        <li><Icon name="check" size={18} /> Férové ceny bez nadhodnocení</li>
         <li><Icon name="check" size={18} /> Kvalitní materiály a doplňky</li>
-        <li><Icon name="check" size={18} /> Vzorkové kuchyňské studio</li>
+        <li><Icon name="check" size={18} /> Vzorkové studio u Chotěboře</li>
       </ul>
+      <a class="link-arrow about__link" href="#kontakt" data-reveal>Přijďte se podívat do studia <Icon name="arrow" size={16} /></a>
     </div>
   </div>
   <div class="container">
@@ -55,7 +55,7 @@ const kitchen = folder('kuchyne')[0];
   .about__img--small figcaption { font-size: 0.78rem; color: var(--muted); padding: 0.5rem 0.2rem; }
   .about__points { list-style: none; padding: 1.75rem 0 0; border-top: 1px solid var(--line); margin: 1.5rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; }
   .about__points li { display: flex; gap: 0.6rem; align-items: center; font-weight: 500; color: var(--ink); }
-  .about__points svg { color: var(--gold); flex: none; }
+  .about__points :global(svg) { color: var(--gold); flex: none; width: 18px; height: 18px; }
   .contact-strip { margin-top: clamp(2.5rem, 5vw, 3.5rem); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; flex-wrap: wrap; padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3vw, 2.5rem); background: var(--cream); border-radius: var(--radius-lg); border-left: 3px solid var(--gold); }
   .contact-strip__title { font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; color: var(--ink); margin: 0 0 0.3rem; }
   .contact-strip__text { margin: 0; color: var(--muted); }
@@ -64,5 +64,15 @@ const kitchen = folder('kuchyne')[0];
     .about__grid { grid-template-columns: 1fr; }
     .about__media { max-width: 560px; }
   }
-  @media (max-width: 480px) { .about__points { grid-template-columns: 1fr; } }
+  .about__link { margin-top: 1.5rem; }
+  /* Small screens: the text comes first, one photo only */
+  @media (max-width: 900px) {
+    .about--compact .about__text { order: -1; }
+    .about--compact .about__media { max-width: none; padding: 0; }
+    .about--compact .about__img--main { width: 100%; aspect-ratio: 16 / 10; }
+    .about--compact .about__img--small { display: none; }
+    .about--compact .about__points { gap: 0.7rem 1rem; font-size: 0.95rem; }
+    .about--compact .about__points li { align-items: flex-start; }
+    .about--compact .about__points :global(svg) { margin-top: 0.3em; }
+  }
 </style>
