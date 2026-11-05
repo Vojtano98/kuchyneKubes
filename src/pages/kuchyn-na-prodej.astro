@@ -1,0 +1,102 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Gallery from '../components/Gallery.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import Icon from '../components/Icon.astro';
+import { folder } from '../lib/images';
+import { site } from '../data/site';
+const imgs = folder('kuchyn-na-prodej');
+const equipment = [
+  'dřez Blanco Zenar 45S',
+  'baterie Daras-S',
+  'vestavná váha',
+  'roletka nerez',
+  'výsuvy a výklopy značky BLUM',
+  'výsuv na lahve a na utěrky',
+  'sada výsuvných košů Lemans',
+  'úchytky nerez',
+  'závěsná lišta v obkladu včetně doplňků',
+  'vnitřní vybavení zásuvek, příborník a rozdělovník nerez',
+  'jídelní stůl + židle',
+];
+---
+<Base title="Kuchyň na prodej za zvýhodněnou cenu" description="Vystavená a kompletně vybavená kuchyň z našeho kuchyňského studia s 50% slevou. Rozměr 384 × 254 cm, výška 193 cm." image={imgs[0]} transparentHeader>
+  <PageHero eyebrow="Akční nabídka" title="Kuchyň na prodej" lead="Kompletně vybavená kuchyň na prodej za zvýhodněnou cenu." image={imgs[0]} />
+
+  <section class="section offer">
+    <div class="container offer__grid">
+      <div class="offer__media" data-reveal>
+        <Image src={imgs[0]} alt="Vystavená kuchyň na prodej" widths={[600, 1000, 1400]} sizes="(max-width: 900px) 92vw, 640px" />
+        <span class="offer__badge">−50&nbsp;%</span>
+      </div>
+      <div class="offer__text">
+        <h2 data-reveal>Kompletně vybavená kuchyň na prodej za zvýhodněnou cenu</h2>
+        <p data-reveal>V rámci neustálého zlepšování a inovací vám nabízíme za bezkonkurenční cenu vystavenou a kompletně vybavenou kuchyň z našeho kuchyňského studia.</p>
+        <dl class="offer__spec" data-reveal>
+          <div><dt>Rozměr</dt><dd>384 × 254 cm, výška 193 cm</dd></div>
+          <div><dt>Sleva</dt><dd>50 %, vystavená v našem kuchyňském studiu</dd></div>
+        </dl>
+        <div class="offer__prices" data-reveal>
+          <div><small>Cena kuchyně</small><strong>29 990 Kč</strong></div>
+          <div><small>Cena doplňků</small><strong>40 990 Kč</strong></div>
+        </div>
+        <p class="offer__note" data-reveal>Spotřebiče nejsou v ceně.</p>
+        <div class="offer__ctas" data-reveal>
+          <a class="btn" href="#zajem">Mám zájem <Icon name="arrow" /></a>
+          <a class="btn btn--ghost offer__ghost" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="offer__equip" data-reveal>
+        <h3>Vybavení</h3>
+        <ul>{equipment.map((e) => <li><Icon name="check" size={18} /> {e}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--cream">
+    <Gallery only={['kuchyn-na-prodej']} filters={false} />
+  </section>
+
+  <section class="section interest" id="zajem">
+    <div class="container interest__grid">
+      <div>
+        <h2 data-reveal>Máte o tuto kuchyň zájem, nebo vás zajímá více informací?</h2>
+        <p class="lead" data-reveal>Kontaktujte nás pomocí formuláře, nebo nám rovnou zavolejte na telefonní číslo <a href={site.phoneHref}>{site.phone}</a>.</p>
+      </div>
+      <div class="interest__card" data-reveal>
+        <InquiryForm name="kuchyn-na-prodej" withName={false} withMessage={false} submitLabel="Mám zájem o kuchyň" subject="Zájem o kuchyň na prodej – kuchynekubes.cz" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .offer__grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+  .offer__media { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
+  .offer__media img { width: 100%; }
+  .offer__badge { position: absolute; top: 1.2rem; left: 1.2rem; background: var(--gold); color: #fff; font-weight: 600; font-size: 1.3rem; padding: 0.6rem 1.1rem; border-radius: 999px; }
+  .offer__spec { display: grid; gap: 0.8rem; margin: 1.5rem 0; }
+  .offer__spec div { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--line); }
+  .offer__spec dt { color: var(--muted); }
+  .offer__spec dd { margin: 0; font-weight: 400; }
+  .offer__prices { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .offer__prices div { background: var(--cream); border-radius: var(--radius); padding: 1.2rem 1.4rem; }
+  .offer__prices small { display: block; color: var(--muted); font-size: 0.82rem; }
+  .offer__prices strong { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; color: var(--gold-dark); letter-spacing: -0.02em; }
+  .offer__note { font-size: 0.9rem; color: var(--muted); margin-top: 0.8rem; }
+  .offer__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .offer__ghost { color: var(--ink); }
+  .offer__ghost:hover { --bg: var(--ink); --fg: #fff; border-color: var(--ink); }
+  .offer__equip { margin-top: clamp(3rem, 6vw, 5rem); padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .offer__equip ul { list-style: none; padding: 0; margin: 0; columns: 2 280px; column-gap: 2rem; }
+  .offer__equip li { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.45rem 0; break-inside: avoid; }
+  .offer__equip svg { color: var(--gold); flex: none; margin-top: 0.3em; }
+  .interest__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+  .interest .lead a { color: var(--gold-dark); font-weight: 500; }
+  .interest__card { background: var(--cream); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); }
+  @media (max-width: 900px) { .offer__grid, .interest__grid { grid-template-columns: 1fr; } }
+</style>

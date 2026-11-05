@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/img/brand/logo.png';
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+
+const { transparent = false } = Astro.props as { transparent?: boolean };
+const path = Astro.url.pathname;
+---
+<header class:list={['header', { 'header--transparent': transparent }]} data-header>
+  <div class="header__inner container">
+    <a href="/" class="header__logo" aria-label={`${site.name} – úvodní stránka`}>
+      <Image src={logo} alt={site.name} width={127} height={73} loading="eager" priority />
+    </a>
+    <nav class="header__nav" aria-label="Hlavní navigace">
+      <ul>
+        {nav.map((item) => (
+          <li><a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <a class="header__phone" href={site.phoneHref}><Icon name="phone" size={18} /><span>{site.phone}</span></a>
+      <a class="btn header__cta" href="/#poptavka">Nezávazná poptávka</a>
+      <button class="header__burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
+        <span class="visually-hidden">Otevřít menu</span>
+        <span class="burger-lines" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+    <nav aria-label="Mobilní navigace">
+      <ul>
+        {nav.map((item, i) => <li style={`--i:${i}`}><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="mobile-menu__contact">
+      <a class="btn" href="/#poptavka">Nezávazná poptávka <Icon name="arrow" /></a>
+      <a href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+      <a href={`mailto:${site.email}`}><Icon name="mail" size={18} /> {site.email}</a>
+    </div>
+</div>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    color: var(--ink);
+    background: rgba(255, 253, 249, 0.86);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.4s, color 0.4s, border-color 0.4s, transform 0.5s var(--ease);
+  }
+  .header--transparent:not(.is-scrolled):not(.is-open) {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: transparent;
+    color: #fff;
+  }
+  .header.is-hidden { transform: translateY(-100%); }
+  .header__inner { display: flex; align-items: center; gap: 2rem; }
+  .header__logo { flex: none; display: block; background: #fffdf9; border-radius: 12px; padding: 5px 10px; box-shadow: 0 6px 20px -10px rgba(0,0,0,0.35); }
+  .header__logo img { height: 48px; width: auto; }
+  .header__nav { margin-inline: auto; }
+  .header__nav ul { display: flex; gap: clamp(1rem, 2vw, 2.1rem); list-style: none; margin: 0; padding: 0; }
+  .header__nav a {
+    position: relative; text-decoration: none; font-size: 0.92rem; font-weight: 400; letter-spacing: 0.01em; padding: 0.4rem 0;
+  }
+  .header__nav a::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease);
+  }
+  .header__nav a:hover::after, .header__nav a[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
+  .header__actions { display: flex; align-items: center; gap: 1.2rem; }
+  .header__phone { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 500; font-size: 0.92rem; white-space: nowrap; }
+  .header__phone svg { color: var(--gold); }
+  .header__cta { padding: 0.75rem 1.3rem; font-size: 0.88rem; }
+  .header__burger { display: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid currentColor; background: none; color: inherit; cursor: pointer; place-items: center; }
+  .burger-lines { display: grid; gap: 6px; width: 18px; }
+  .burger-lines i { display: block; height: 1.5px; background: currentColor; transition: transform 0.4s var(--ease); }
+  .is-open .burger-lines i:first-child { transform: translateY(3.75px) rotate(45deg); }
+  .is-open .burger-lines i:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu {
+    position: fixed; z-index: 49; inset: var(--header-h) 0 0; background: var(--paper); color: var(--ink);
+    padding: 2rem 1.5rem 3rem; display: flex; flex-direction: column; justify-content: space-between; overflow-y: auto;
+  }
+  .mobile-menu ul { list-style: none; margin: 0; padding: 0; }
+  .mobile-menu li { border-bottom: 1px solid var(--line); opacity: 0; transform: translateY(14px); animation: menu-in 0.6s var(--ease) forwards; animation-delay: calc(var(--i) * 50ms + 80ms); }
+  .mobile-menu li a { display: block; padding: 1rem 0; font-size: 1.6rem; font-weight: 400; text-decoration: none; letter-spacing: -0.01em; }
+  .mobile-menu__contact { display: grid; gap: 1rem; margin-top: 2rem; }
+  .mobile-menu__contact a:not(.btn) { display: inline-flex; gap: 0.6rem; align-items: center; text-decoration: none; color: var(--muted); }
+  @keyframes menu-in { to { opacity: 1; transform: none; } }
+
+  @media (max-width: 1180px) {
+    .header__phone span { display: none; }
+    .header__phone { width: 44px; height: 44px; justify-content: center; border-radius: 50%; border: 1px solid currentColor; }
+  }
+  @media (max-width: 1020px) {
+    :global(:root) { --header-h: 72px; }
+    .header__nav, .header__cta { display: none; }
+    .header__burger { display: grid; }
+    .header__actions { margin-left: auto; }
+    .header__logo img { height: 40px; }
+  }
+  @media (min-width: 1021px) { .mobile-menu { display: none !important; } }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const burger = header.querySelector<HTMLButtonElement>('[data-burger]')!;
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]')!;
+  let lastY = window.scrollY;
+  const onScroll = () => {
+    const y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 40);
+    if (!header.classList.contains('is-open')) header.classList.toggle('is-hidden', y > 500 && y > lastY + 4);
+    if (y < lastY - 4) header.classList.remove('is-hidden');
+    lastY = y;
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  const setOpen = (open: boolean) => {
+    header.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    menu.hidden = !open;
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
+  menu.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) setOpen(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+</script>

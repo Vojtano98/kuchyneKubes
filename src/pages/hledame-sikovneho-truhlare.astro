@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { folder } from '../lib/images';
+import { site } from '../data/site';
+const [banner] = folder('truhlar');
+const bg = folder('hero')[0];
+---
+<Base title="Hledáme šikovného truhláře" description="Hledáme šikovného truhláře pro zakázkovou výrobu nábytku a kuchyní. Dílna a showroom ve Svinném u Chotěboře." image={banner} transparentHeader>
+  <PageHero eyebrow="Kariéra" title="Hledáme šikovného truhláře" lead="Pro zakázkovou výrobu nábytku a kuchyní. Přidej se k týmu, který tvoří kuchyně srdcem." image={bg}>
+    <div class="job-hero__ctas">
+      <a class="btn" href={`mailto:${site.email}?subject=Z%C3%A1jem%20o%20pozici%20truhl%C3%A1%C5%99e`}>Napsat pár řádků o sobě <Icon name="arrow" /></a>
+      <a class="btn btn--ghost" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container job">
+      <div class="job__intro" data-reveal>
+        <h2>Koho hledáme?</h2>
+        <p class="lead">Do našeho přátelského a stabilního týmu hledáme <strong>zručného truhláře</strong>, který má rád kvalitní řemeslo a chce se podílet na výrobě a montáži zakázkových kuchyní a nábytku na míru.</p>
+      </div>
+      <div class="job__cols">
+        <div class="job__card" data-reveal>
+          <h3>Co u nás získáš?</h3>
+          <ul>
+            <li><Icon name="check" size={18} /><span><strong>Stálou práci</strong> ve stabilní firmě s férovým přístupem</span></li>
+            <li><Icon name="check" size={18} /><span><strong>Zajímavé projekty</strong> – žádná pásová výroba</span></li>
+            <li><Icon name="check" size={18} /><span><strong>Moderní vybavení</strong> dílny a zázemí kuchyňského studia</span></li>
+            <li><Icon name="check" size={18} /><span><strong>Možnost se rozvíjet</strong> – nové technologie i materiály</span></li>
+            <li><Icon name="check" size={18} /><span><strong>Odpovídající finanční ohodnocení</strong> podle tvých zkušeností</span></li>
+            <li><Icon name="check" size={18} /><span><strong>Partu kolegů</strong>, na které se můžeš spolehnout</span></li>
+          </ul>
+        </div>
+        <div class="job__card" data-reveal style="--delay:.1s">
+          <h3>Co od tebe očekáváme?</h3>
+          <ul>
+            <li><Icon name="check" size={18} /><span><strong>Zkušenosti nejsou nutné</strong> – vše potřebné tě rádi naučíme a perfektně zaškolíme.</span></li>
+            <li><Icon name="check" size={18} /><span>Samostatnost, pečlivost a technické myšlení</span></li>
+            <li><Icon name="check" size={18} /><span>Řidičský průkaz sk. B výhodou</span></li>
+            <li><Icon name="check" size={18} /><span>Chuť dělat práci, která má smysl a je za ní vidět výsledek</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="job__where" data-reveal>
+        <div>
+          <h3>Kde pracujeme?</h3>
+          <p>Naše dílna i showroom se nachází na adrese <strong>Svinný 82, 583 01 Chotěboř</strong>.</p>
+          <h3>Chceš se k nám přidat?</h3>
+          <p>Stačí nám poslat pár řádků o sobě na adresu <a href={`mailto:${site.email}`}>{site.email}</a> nebo nám rovnou zavolat na tel. číslo: <a href={site.phoneHref}>{site.phone}</a>.</p>
+        </div>
+        <Image src={banner} alt="Hledáme šikovného truhláře" widths={[600, 1200]} sizes="(max-width: 900px) 92vw, 600px" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .job-hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+  .job__intro { max-width: 760px; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+  .job__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 2rem); }
+  .job__card { background: var(--cream); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); }
+  .job__card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+  .job__card li { display: flex; gap: 0.7rem; align-items: flex-start; }
+  .job__card svg { color: var(--gold); flex: none; margin-top: 0.3em; }
+  .job__where { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-top: clamp(3rem, 6vw, 5rem); }
+  .job__where img { border-radius: var(--radius-lg); width: 100%; }
+  .job__where a { color: var(--gold-dark); font-weight: 500; }
+  @media (max-width: 860px) { .job__cols, .job__where { grid-template-columns: 1fr; } }
+</style>

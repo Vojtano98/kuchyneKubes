@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import InquiryForm from './InquiryForm.astro';
+import Icon from './Icon.astro';
+import mm from '../assets/img/brand/mm-spotrebice.png';
+import { site } from '../data/site';
+import { folder } from '../lib/images';
+const bg = folder('hero')[2];
+---
+<section class="section inquiry" id="poptavka">
+  <div class="inquiry__bg" aria-hidden="true">
+    <Image src={bg} alt="" widths={[800, 1400, 2000]} sizes="100vw" quality={60} />
+  </div>
+  <div class="container inquiry__grid">
+    <div class="inquiry__intro">
+      <p class="eyebrow" data-reveal>Nezávazná poptávka</p>
+      <h2 data-reveal>Nezávazná poptávka včetně kompletního návrhu</h2>
+      <p class="lead" data-reveal>Sdělte nám vaši představu realizace – nezávazně a včetně kompletního návrhu.</p>
+      <div class="inquiry__contacts" data-reveal>
+        <a href={site.phoneHref}><span><Icon name="phone" /></span><div><small>Zavolejte nám</small>{site.phone}</div></a>
+        <a href={`mailto:${site.email}`}><span><Icon name="mail" /></span><div><small>Napište nám</small>{site.email}</div></a>
+      </div>
+      <a class="partner" href={site.partner.url} target="_blank" rel="noopener" data-reveal>
+        <small>Spotřebiče do kuchyní v té nejvyšší kvalitě dodává česká rodinná firma</small>
+        <Image src={mm} alt={site.partner.name} width={229} height={60} />
+      </a>
+    </div>
+    <div class="inquiry__card" data-reveal>
+      <InquiryForm />
+    </div>
+  </div>
+</section>
+
+<style>
+  .inquiry { position: relative; background: var(--ink); color: #fff; overflow: hidden; isolation: isolate; }
+  .inquiry__bg { position: absolute; inset: 0; z-index: -1; }
+  .inquiry__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.22; }
+  .inquiry__grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+  .inquiry .lead { color: #cfc5b6; }
+  .inquiry__contacts { display: grid; gap: 1rem; margin: 2rem 0 2.5rem; }
+  .inquiry__contacts a { display: flex; gap: 1rem; align-items: center; text-decoration: none; font-size: 1.15rem; font-weight: 400; }
+  .inquiry__contacts span { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.2); color: var(--gold-light); transition: background 0.3s, color 0.3s; }
+  .inquiry__contacts a:hover span { background: var(--gold); color: #fff; border-color: var(--gold); }
+  .inquiry__contacts small { display: block; font-size: 0.75rem; color: #a3998a; letter-spacing: 0.08em; text-transform: uppercase; }
+  .partner { display: inline-flex; flex-direction: column; gap: 0.8rem; padding: 1.2rem 1.4rem; background: #fff; border-radius: var(--radius); text-decoration: none; color: var(--muted); max-width: 360px; transition: transform 0.4s var(--ease); }
+  .partner:hover { transform: translateY(-3px); }
+  .partner small { font-size: 0.8rem; line-height: 1.5; }
+  .partner img { height: 48px; width: auto; }
+  .inquiry__card { background: var(--paper); color: var(--ink); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.8rem); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6); }
+  @media (max-width: 900px) { .inquiry__grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/img/brand/logo.png';
+import Icon from './Icon.astro';
+import { site, branches } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <Image src={logo} alt={site.name} width={127} height={73} />
+      <p>Kuchyně a nábytek na míru přesně podle vašich představ. Vlastní dílna a vzorkové kuchyňské studio v Chotěboři.</p>
+      <a class="footer__social" href={site.facebook} target="_blank" rel="noopener"><Icon name="facebook" size={18} /> Facebook</a>
+    </div>
+    <div>
+      <h2 class="footer__title">Menu</h2>
+      <ul>
+        <li><a href="/#onas">O nás</a></li>
+        <li><a href="/#sluzby">Služby</a></li>
+        <li><a href="/realizace/">Realizace</a></li>
+        <li><a href="/kuchyn-na-prodej/">Kuchyň na prodej</a></li>
+        <li><a href="/hledame-sikovneho-truhlare/">Hledáme truhláře</a></li>
+        <li><a href="/#poptavka">Nezávazná poptávka</a></li>
+        <li><a href="/#pobocky">Pobočky</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer__title">Kontakt</h2>
+      <ul>
+        <li><a href={site.phoneHref}><Icon name="phone" size={16} /> {site.phone}</a></li>
+        <li><a href={`mailto:${site.email}`}><Icon name="mail" size={16} /> {site.email}</a></li>
+        {branches.map((b) => <li><a href={b.mapLink} target="_blank" rel="noopener"><Icon name="pin" size={16} /> {b.street}, {b.city}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer__title">Fakturační údaje</h2>
+      <p>{site.name}<br />{site.billing}<br />IČ: {site.ico}<br />DIČ: {site.dic}</p>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© {year} {site.name}</span>
+    <a href="/ochrana-osobnich-udaju/">Ochrana osobních údajů</a>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--ink); color: #b9b0a2; padding: clamp(3.5rem, 7vw, 5.5rem) 0 2rem; font-size: 0.95rem; }
+  .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1.3fr 1.1fr; gap: 2.5rem; }
+  .footer__brand img { height: 52px; width: auto; margin-bottom: 1.2rem; background: #fffdf9; border-radius: 12px; padding: 6px 10px; box-sizing: content-box; }
+  .footer__brand p { max-width: 34ch; }
+  .footer__title { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-light); font-weight: 500; margin-bottom: 1.2rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  a { text-decoration: none; display: inline-flex; gap: 0.55rem; align-items: center; transition: color 0.3s; }
+  a:hover { color: #fff; }
+  svg { color: var(--gold); flex: none; }
+  .footer__social { margin-top: 0.4rem; border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 0.5rem 1rem; }
+  .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; }
+  @media (max-width: 900px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .footer__grid { grid-template-columns: 1fr; } }
+</style>

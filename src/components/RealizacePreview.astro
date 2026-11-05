@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { categories } from '../data/categories';
+import { folder } from '../lib/images';
+
+const cards = categories
+  .filter((c) => c.service)
+  .map((c) => ({ ...c, imgs: folder(c.slug) }));
+const [kitchens, ...rest] = cards;
+// A few cover images per card so the card can crossfade on hover
+---
+<section class="section section--cream realizace" id="realizace">
+  <div class="container">
+    <div class="realizace__head">
+      <div>
+        <p class="eyebrow" data-reveal>Realizace</p>
+        <h2 data-reveal>Hotové realizace u zákazníků</h2>
+      </div>
+      <a class="link-arrow" href="/realizace/" data-reveal>Celá galerie realizací <Icon name="arrow" size={18} /></a>
+    </div>
+
+    <div class="realizace__grid">
+      <a class="card card--big" href={`/realizace/#${kitchens.slug}`} data-reveal>
+        <Image src={folder('sluzby')[0]} alt="Kuchyně na míru – realizace" widths={[600, 900, 1300]} sizes="(max-width: 760px) 92vw, 640px" />
+        <div class="card__body">
+          <span class="card__count">{kitchens.imgs.length} fotografií</span>
+          <h3>{kitchens.name}</h3>
+          <span class="card__more">Prohlédnout <Icon name="arrow" size={18} /></span>
+        </div>
+      </a>
+      {rest.map((c, i) => (
+        <a class="card" href={`/realizace/#${c.slug}`} data-reveal style={`--delay:${(i % 3) * 0.08}s`}>
+          <Image src={c.imgs[0]} alt={`${c.name} – nábytek na míru`} widths={[400, 700]} sizes="(max-width: 760px) 92vw, 380px" />
+          <div class="card__body">
+            <span class="card__count">{c.imgs.length} fotografií</span>
+            <h3>{c.name}</h3>
+            <span class="card__more">Prohlédnout <Icon name="arrow" size={18} /></span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="realizace__cta" data-reveal>
+      <a class="btn btn--dark" href="/realizace/">Zobrazit všechny realizace <Icon name="arrow" /></a>
+      <a class="btn btn--ghost realizace__ghost" href="#poptavka">Nezávazná poptávka</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .realizace__head { display: flex; justify-content: space-between; align-items: end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+  .realizace__head h2 { margin: 0; }
+  .realizace__grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(220px, 22vw, 300px); gap: clamp(0.8rem, 1.5vw, 1.2rem); }
+  .card { position: relative; border-radius: var(--radius); overflow: hidden; color: #fff; text-decoration: none; isolation: isolate; background: var(--ink); }
+  .card--big { grid-column: span 2; grid-row: span 2; }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; transition: transform 1.2s var(--ease), opacity 0.6s; }
+  .card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(15,12,9,0.88) 0%, rgba(15,12,9,0.45) 38%, rgba(15,12,9,0) 70%); transition: opacity 0.5s; }
+  .card:hover img { transform: scale(1.06); }
+  .card__body { position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(1.1rem, 2vw, 1.6rem); }
+  .card h3 { margin: 0.2rem 0 0; font-size: clamp(1.25rem, 2vw, 1.6rem); }
+  .card--big h3 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); }
+  .card__count { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-light); }
+  .card__more { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; margin-top: 0.6rem; opacity: 0; transform: translateY(8px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
+  .card:hover .card__more, .card:focus-visible .card__more { opacity: 1; transform: none; }
+  .realizace__cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+  .realizace__ghost { color: var(--ink); }
+  .realizace__ghost:hover { --bg: var(--ink); --fg: #fff; border-color: var(--ink); }
+  @media (hover: none) { .card__more { opacity: 1; transform: none; } }
+  @media (max-width: 1000px) { .realizace__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) {
+    .realizace__grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+    .card--big { grid-column: span 2; grid-row: span 1; height: 300px; }
+    .card__more { display: none; }
+  }
+</style>

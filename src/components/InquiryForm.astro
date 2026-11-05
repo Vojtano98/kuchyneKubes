@@ -1,0 +1,92 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+interface Props { name?: string; withName?: boolean; withMessage?: boolean; submitLabel?: string; subject?: string }
+const { name = 'poptavka', withName = true, withMessage = true, submitLabel = 'Odeslat nezávaznou poptávku', subject = 'Nová poptávka z webu kuchynekubes.cz' } = Astro.props;
+---
+<form class="form" name={name} method="POST" action="/dekujeme/" data-netlify="true" netlify-honeypot="bot-field" data-form>
+  <input type="hidden" name="form-name" value={name} />
+  <input type="hidden" name="subject" value={subject} />
+  <p class="visually-hidden"><label>Nevyplňujte <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+  <div class="form__grid">
+    {withName && (
+      <div class="field field--full">
+        <input id={`${name}-jmeno`} name="jmeno" type="text" autocomplete="name" placeholder=" " required />
+        <label for={`${name}-jmeno`}>Jméno a příjmení *</label>
+      </div>
+    )}
+    <div class="field">
+      <input id={`${name}-email`} name="email" type="email" autocomplete="email" placeholder=" " required />
+      <label for={`${name}-email`}>E-mail *</label>
+    </div>
+    <div class="field">
+      <input id={`${name}-telefon`} name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder=" " required />
+      <label for={`${name}-telefon`}>Telefonní číslo *</label>
+    </div>
+    {withMessage && (
+      <div class="field field--full">
+        <textarea id={`${name}-zprava`} name="zprava" rows="5" placeholder=" "></textarea>
+        <label for={`${name}-zprava`}>Sdělte nám vaši představu realizace</label>
+      </div>
+    )}
+  </div>
+  <p class="form__note">Odesláním poptávky souhlasíte se zpracováním osobních údajů – <a href="/ochrana-osobnich-udaju/">Informace o zpracování osobních údajů</a>.</p>
+  <button class="btn form__submit" type="submit"><span>{submitLabel}</span> <Icon name="arrow" /></button>
+  <div class="form__status" role="status" aria-live="polite" data-status></div>
+</form>
+
+<style>
+  .form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field { position: relative; }
+  .field--full { grid-column: 1 / -1; }
+  .field input, .field textarea {
+    width: 100%; font: inherit; font-weight: 400; font-size: 1rem; color: var(--ink);
+    background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.55rem 1.1rem 0.6rem;
+    transition: border-color 0.3s, box-shadow 0.3s; resize: vertical;
+  }
+  .field textarea { min-height: 150px; }
+  .field label { position: absolute; left: 1.1rem; top: 1.05rem; color: var(--muted); font-size: 1rem; pointer-events: none; transition: transform 0.25s var(--ease), font-size 0.25s, color 0.25s; transform-origin: left top; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(193,144,49,0.15); }
+  .field input:focus + label, .field input:not(:placeholder-shown) + label,
+  .field textarea:focus + label, .field textarea:not(:placeholder-shown) + label { transform: translateY(-0.6rem); font-size: 0.74rem; color: var(--gold-dark); }
+  .field input:user-invalid { border-color: #c0392b; }
+  .form__note { font-size: 0.82rem; color: var(--muted); margin: 1rem 0 1.4rem; }
+  .form__note a { color: var(--gold-dark); }
+  .form__submit { width: 100%; padding-block: 1.15rem; font-size: 1rem; }
+  .form__submit[disabled] { opacity: 0.6; pointer-events: none; }
+  .form__status:not(:empty) { margin-top: 1rem; padding: 1rem 1.2rem; border-radius: 12px; font-weight: 400; }
+  .form__status.is-ok { background: #edf6ea; color: #24572b; }
+  .form__status.is-error { background: #fbeceb; color: #8c2a20; }
+  @media (max-width: 560px) { .form__grid { grid-template-columns: 1fr; } }
+</style>
+
+<script define:vars={{ phone: site.phone }}>
+  document.querySelectorAll('[data-form]').forEach((form) => {
+    if (form.dataset.bound) return;
+    form.dataset.bound = '1';
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type=submit]');
+      const status = form.querySelector('[data-status]');
+      btn.disabled = true;
+      status.className = 'form__status';
+      status.textContent = 'Odesílám…';
+      try {
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString(),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.classList.add('is-ok');
+        status.textContent = 'Děkujeme, vaše zpráva byla odeslána. Brzy se vám ozveme.';
+      } catch {
+        status.classList.add('is-error');
+        status.textContent = `Zprávu se nepodařilo odeslat. Zkuste to prosím znovu, nebo nám zavolejte na ${phone}.`;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  });
+</script>

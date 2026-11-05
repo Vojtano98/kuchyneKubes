@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { categories } from '../data/categories';
+import { folder } from '../lib/images';
+const imgs = folder('sluzby');
+const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img: imgs[i] }));
+---
+<section class="section section--dark services" id="sluzby">
+  <div class="container">
+    <div class="services__head">
+      <div>
+        <p class="eyebrow" data-reveal>Služby</p>
+        <h2 data-reveal>Služby, které poskytujeme</h2>
+      </div>
+      <p class="lead" data-reveal>Naši zkušení truhláři pracují s maximální precizností, aby vytvořili nábytek, který plně vyhovuje vašim požadavkům.</p>
+    </div>
+
+    <div class="services__tabs" role="tablist" aria-label="Služby" data-reveal>
+      {services.map((s, i) => (
+        <button type="button" role="tab" id={`tab-${s.slug}`} aria-controls={`panel-${s.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab>
+          <span>{String(i + 1).padStart(2, '0')}</span>{s.name}
+        </button>
+      ))}
+    </div>
+
+    <div class="services__panels">
+      {services.map((s, i) => (
+        <div class="services__panel" role="tabpanel" id={`panel-${s.slug}`} aria-labelledby={`tab-${s.slug}`} hidden={i !== 0} data-panel>
+          <div class="services__img">
+            <Image src={s.img!} alt={`${s.name} – nábytek na míru`} widths={[600, 900, 1300]} sizes="(max-width: 900px) 92vw, 640px" />
+          </div>
+          <div class="services__copy">
+            <h3>{s.service!.title}</h3>
+            {s.service!.paragraphs.map((p) => <p>{p}</p>)}
+            <a class="btn" href={`/realizace/#${s.slug}`}>Prohlédnout dokončené realizace <Icon name="arrow" /></a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services__head { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: end; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+  .services__head h2 { margin: 0; }
+  .services__tabs { display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: clamp(2rem, 4vw, 3rem); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+  @media (min-width: 1000px) { .services__tabs { -webkit-mask-image: none; mask-image: none; } }
+  .services__tabs::-webkit-scrollbar { display: none; }
+  .services__tabs button { flex: none; background: none; border: 0; color: #9d9384; font: inherit; font-size: 1rem; padding: 1rem 1.2rem 1.1rem; cursor: pointer; position: relative; display: flex; gap: 0.6rem; align-items: baseline; white-space: nowrap; transition: color 0.3s; }
+  .services__tabs button span { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em; }
+  .services__tabs button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.5s var(--ease); }
+  .services__tabs button[aria-selected='true'] { color: #fff; }
+  .services__tabs button[aria-selected='true']::after, .services__tabs button:hover::after { transform: scaleX(1); }
+  .services__panel { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; animation: panel-in 0.8s var(--ease); }
+  .services__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; }
+  .services__img img { width: 100%; height: 100%; object-fit: cover; }
+  .services__copy p { color: #c4baab; }
+  .services__copy .btn { margin-top: 1rem; }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(16px); } }
+  @media (max-width: 900px) {
+    .services__head, .services__panel { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+  const panels = [...document.querySelectorAll<HTMLElement>('[data-panel]')];
+  const select = (i: number, focus = false) => {
+    tabs.forEach((t, j) => {
+      t.setAttribute('aria-selected', String(i === j));
+      t.tabIndex = i === j ? 0 : -1;
+      panels[j].hidden = i !== j;
+    });
+    tabs[i].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') select((i + 1) % tabs.length, true);
+      if (e.key === 'ArrowLeft') select((i - 1 + tabs.length) % tabs.length, true);
+    });
+  });
+</script>
