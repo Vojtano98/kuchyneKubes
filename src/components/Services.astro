@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 import { categories } from '../data/categories';
 import { folder } from '../lib/images';
 // One modern, sharp realization per category (index in its folder)
-const photo: Record<string, number> = { kuchyne: 180, loznice: 16, chodby: 16, koupelny: 7, 'detske-pokoje': 0, 'obyvaci-pokoje': 3 };
+const photo: Record<string, number> = { kuchyne: 195, loznice: 16, chodby: 16, koupelny: 7, 'detske-pokoje': 0, 'obyvaci-pokoje': 3 };
 const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: folder(c.slug)[photo[c.slug] ?? 0], count: folder(c.slug).length }));
 ---
 <section class="section section--dark services" id="sluzby">

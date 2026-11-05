@@ -6,14 +6,14 @@ import { folder } from '../lib/images';
 
 // Hand-picked photos (category, index in its folder) – the strongest shots across categories
 const picks: [string, number, string][] = [
-  ['kuchyne', 176, 'big'],
+  ['kuchyne', 204, 'big'],
   ['obyvaci-pokoje', 8, ''],
   ['loznice', 10, ''],
   ['chodby', 15, ''],
   ['koupelny', 6, ''],
-  ['kuchyne', 33, 'wide'],
+  ['kuchyne', 217, 'wide'],
   ['detske-pokoje', 25, ''],
-  ['kuchyne', 81, ''],
+  ['kuchyne', 190, ''],
 ];
 const name = (slug: string) => categories.find((c) => c.slug === slug)?.name ?? slug;
 const items = picks.map(([slug, i, size]) => ({ slug, size, img: folder(slug)[i] ?? folder(slug)[0], label: name(slug) }));
