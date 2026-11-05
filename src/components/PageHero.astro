@@ -1,14 +1,20 @@
 ---
 import { Image } from 'astro:assets';
-interface Props { title: string; eyebrow?: string; lead?: string; image?: ImageMetadata }
-const { title, eyebrow, lead, image } = Astro.props;
+interface Props { title: string; eyebrow?: string; lead?: string; image?: ImageMetadata; imageAlt?: string; focus?: string }
+const { title, eyebrow, lead, image, imageAlt = '', focus } = Astro.props;
 ---
 <section class="page-hero">
-  {image && <div class="page-hero__bg"><Image src={image} alt="" widths={[800, 1400, 2000]} sizes="100vw" loading="eager" priority quality={65} /></div>}
-  <div class="container">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    <h1>{title}</h1>
-    {lead && <p class="lead">{lead}</p>}
-    <slot />
+  <div class:list={['container page-hero__grid', { 'page-hero__grid--text': !image }]}>
+    <div class="page-hero__text">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1>{title}</h1>
+      {lead && <p class="lead">{lead}</p>}
+      <slot />
+    </div>
+    {image && (
+      <div class="page-hero__media" style={focus ? `--focus:${focus}` : undefined}>
+        <Image src={image} alt={imageAlt} widths={[600, 900, 1300]} sizes="(max-width: 860px) 92vw, 620px" loading="eager" priority />
+      </div>
+    )}
   </div>
 </section>

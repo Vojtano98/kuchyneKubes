@@ -4,8 +4,8 @@ import Icon from './Icon.astro';
 import { categories } from '../data/categories';
 import { folder } from '../lib/images';
 
-interface Props { only?: string[]; filters?: boolean }
-const { only, filters = true } = Astro.props;
+interface Props { only?: string[]; filters?: boolean; headings?: boolean }
+const { only, filters = true, headings = true } = Astro.props;
 
 const groups = await Promise.all(
   categories
@@ -33,7 +33,7 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
 <div class="container gallery" data-gallery>
   {groups.map((g) => (
     <section class="gallery__group" id={g.slug} data-group={g.slug} aria-labelledby={`h-${g.slug}`}>
-      <div class="gallery__head">
+      <div class:list={['gallery__head', { 'visually-hidden': !headings }]}>
         <h2 id={`h-${g.slug}`}>{g.name}</h2>
         <span>{g.items.length} fotografií</span>
       </div>
@@ -73,11 +73,11 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
   .filters button[aria-pressed='true'] { background: var(--ink); color: #fff; border-color: var(--ink); }
   .filters button[aria-pressed='true'] span { color: var(--gold-light); }
 
-  .gallery { padding-block: clamp(2.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem); }
+  .gallery { padding-block: clamp(2rem, 4vw, 3rem) clamp(4.5rem, 9vw, 7rem); }
   .gallery__group { scroll-margin-top: calc(var(--header-h) + 80px); }
   .gallery__group + .gallery__group { margin-top: clamp(3rem, 6vw, 5rem); }
   .gallery__group[hidden] { display: none; }
-  .gallery__head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.4rem; }
+  .gallery__head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
   .gallery__head h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.3rem); }
   .gallery__head span { color: var(--muted); font-size: 0.9rem; }
   .gallery__grid { columns: 4 260px; column-gap: clamp(0.6rem, 1.2vw, 1rem); }

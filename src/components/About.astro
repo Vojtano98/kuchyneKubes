@@ -30,20 +30,22 @@ const kitchen = folder('kuchyne')[0];
       </ul>
     </div>
   </div>
-</section>
-
-<section class="callband" aria-label="Zavolejte nám">
-  <div class="container callband__inner" data-reveal>
-    <p class="callband__title">Nábytek na míru přesně podle vašich představ</p>
-    <div class="callband__cta">
-      <span>Zavolejte nám, rádi se vám budeme věnovat.</span>
-      <a class="btn" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+  <div class="container">
+    <div class="contact-strip" data-reveal>
+      <div>
+        <p class="contact-strip__title">Nábytek na míru přesně podle vašich představ</p>
+        <p class="contact-strip__text">Zavolejte nám, rádi se vám budeme věnovat.</p>
+      </div>
+      <div class="contact-strip__actions">
+        <a class="btn" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+        <a class="btn btn--outline" href="#poptavka">Nezávazná poptávka</a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .about__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 7vw, 7rem); align-items: center; }
+  .about__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 7vw, 7rem); align-items: center; }
   .about__media { position: relative; padding: 0 0 4rem 0; }
   .about__img { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
   .about__img--main { aspect-ratio: 4 / 5; width: 86%; }
@@ -51,15 +53,13 @@ const kitchen = folder('kuchyne')[0];
   .about__img--small { position: absolute; right: 0; bottom: 0; width: 46%; background: var(--paper); padding: 0.6rem 0.6rem 0.2rem; border-radius: var(--radius); }
   .about__img--small img { border-radius: calc(var(--radius) - 4px); aspect-ratio: 470 / 550; object-fit: cover; width: 100%; }
   .about__img--small figcaption { font-size: 0.78rem; color: var(--muted); padding: 0.5rem 0.2rem; }
-  .about__points { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; }
-  .about__points li { display: flex; gap: 0.6rem; align-items: center; font-weight: 400; }
+  .about__points { list-style: none; padding: 1.75rem 0 0; border-top: 1px solid var(--line); margin: 2rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; }
+  .about__points li { display: flex; gap: 0.6rem; align-items: center; font-weight: 500; color: var(--ink); }
   .about__points svg { color: var(--gold); flex: none; }
-  .callband { background: var(--gold); color: #fff; }
-  .callband__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding-block: clamp(2.5rem, 5vw, 3.5rem); flex-wrap: wrap; }
-  .callband__title { font-size: clamp(1.4rem, 2.6vw, 2.1rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; margin: 0; max-width: 22ch; }
-  .callband__cta { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-  .callband .btn { --bg: var(--ink); border-color: var(--ink); font-size: 1.05rem; }
-  .callband .btn:hover { --bg: #000; box-shadow: 0 14px 30px -12px rgba(0,0,0,0.5); }
+  .contact-strip { margin-top: clamp(4rem, 8vw, 6.5rem); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; flex-wrap: wrap; padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.5rem, 4vw, 3rem); background: var(--cream); border-radius: var(--radius-lg); border-left: 3px solid var(--gold); }
+  .contact-strip__title { font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; color: var(--ink); margin: 0 0 0.3rem; }
+  .contact-strip__text { margin: 0; color: var(--muted); }
+  .contact-strip__actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
   @media (max-width: 900px) {
     .about__grid { grid-template-columns: 1fr; }
     .about__media { max-width: 560px; }

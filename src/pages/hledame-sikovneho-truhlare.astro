@@ -6,13 +6,14 @@ import Icon from '../components/Icon.astro';
 import { folder } from '../lib/images';
 import { site } from '../data/site';
 const [banner] = folder('truhlar');
-const bg = folder('hero')[0];
+const heroImg = folder('hero')[0];
+const [prodejna] = folder('onas');
 ---
-<Base title="Hledáme šikovného truhláře" description="Hledáme šikovného truhláře pro zakázkovou výrobu nábytku a kuchyní. Dílna a showroom ve Svinném u Chotěboře." image={banner} transparentHeader>
-  <PageHero eyebrow="Kariéra" title="Hledáme šikovného truhláře" lead="Pro zakázkovou výrobu nábytku a kuchyní. Přidej se k týmu, který tvoří kuchyně srdcem." image={bg}>
+<Base title="Hledáme šikovného truhláře" description="Hledáme šikovného truhláře pro zakázkovou výrobu nábytku a kuchyní. Dílna a showroom ve Svinném u Chotěboře." image={banner}>
+  <PageHero eyebrow="Kariéra" title="Hledáme šikovného truhláře" lead="Pro zakázkovou výrobu nábytku a kuchyní. Přidej se k týmu, který tvoří kuchyně srdcem." image={heroImg} imageAlt="Truhlář v kuchyni na míru" focus="82% 50%">
     <div class="job-hero__ctas">
       <a class="btn" href={`mailto:${site.email}?subject=Z%C3%A1jem%20o%20pozici%20truhl%C3%A1%C5%99e`}>Napsat pár řádků o sobě <Icon name="arrow" /></a>
-      <a class="btn btn--ghost" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+      <a class="btn btn--outline" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
     </div>
   </PageHero>
 
@@ -51,14 +52,14 @@ const bg = folder('hero')[0];
           <h3>Chceš se k nám přidat?</h3>
           <p>Stačí nám poslat pár řádků o sobě na adresu <a href={`mailto:${site.email}`}>{site.email}</a> nebo nám rovnou zavolat na tel. číslo: <a href={site.phoneHref}>{site.phone}</a>.</p>
         </div>
-        <Image src={banner} alt="Hledáme šikovného truhláře" widths={[600, 1200]} sizes="(max-width: 900px) 92vw, 600px" />
+        <figure class="job__photo"><Image src={prodejna} alt="Dílna a showroom Kuchyně Nábytek Kubeš, Svinný 82" widths={[470]} sizes="(max-width: 860px) 92vw, 470px" /><figcaption>Dílna a showroom, Svinný 82, Chotěboř</figcaption></figure>
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .job-hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+  .job-hero__ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 2rem; }
   .job__intro { max-width: 760px; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
   .job__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 2rem); }
   .job__card { background: var(--cream); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); }
@@ -66,7 +67,9 @@ const bg = folder('hero')[0];
   .job__card li { display: flex; gap: 0.7rem; align-items: flex-start; }
   .job__card svg { color: var(--gold); flex: none; margin-top: 0.3em; }
   .job__where { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-top: clamp(3rem, 6vw, 5rem); }
-  .job__where img { border-radius: var(--radius-lg); width: 100%; }
+  .job__photo { margin: 0; justify-self: center; max-width: 470px; }
+  .job__photo img { border-radius: var(--radius-lg); width: 100%; box-shadow: var(--shadow); }
+  .job__photo figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.8rem; }
   .job__where a { color: var(--gold-dark); font-weight: 500; }
   @media (max-width: 860px) { .job__cols, .job__where { grid-template-columns: 1fr; } }
 </style>

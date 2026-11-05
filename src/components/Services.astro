@@ -4,11 +4,11 @@ import Icon from './Icon.astro';
 import { categories } from '../data/categories';
 import { folder } from '../lib/images';
 const imgs = folder('sluzby');
-const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img: imgs[i] }));
+const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img: imgs[i], count: folder(c.slug).length }));
 ---
 <section class="section section--dark services" id="sluzby">
   <div class="container">
-    <div class="services__head">
+    <div class="section-head section-head--split">
       <div>
         <p class="eyebrow" data-reveal>Služby</p>
         <h2 data-reveal>Služby, které poskytujeme</h2>
@@ -16,24 +16,27 @@ const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img:
       <p class="lead" data-reveal>Naši zkušení truhláři pracují s maximální precizností, aby vytvořili nábytek, který plně vyhovuje vašim požadavkům.</p>
     </div>
 
-    <div class="services__tabs" role="tablist" aria-label="Služby" data-reveal>
-      {services.map((s, i) => (
-        <button type="button" role="tab" id={`tab-${s.slug}`} aria-controls={`panel-${s.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab>
-          <span>{String(i + 1).padStart(2, '0')}</span>{s.name}
-        </button>
-      ))}
+    <div class="tabs" data-reveal>
+      <div class="tabs__list" role="tablist" aria-label="Vyberte službu">
+        {services.map((s, i) => (
+          <button type="button" role="tab" id={`tab-${s.slug}`} aria-controls={`panel-${s.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab>
+            {s.name}
+          </button>
+        ))}
+      </div>
     </div>
 
-    <div class="services__panels">
+    <div class="panels">
       {services.map((s, i) => (
-        <div class="services__panel" role="tabpanel" id={`panel-${s.slug}`} aria-labelledby={`tab-${s.slug}`} hidden={i !== 0} data-panel>
-          <div class="services__img">
+        <div class="panel" role="tabpanel" id={`panel-${s.slug}`} aria-labelledby={`tab-${s.slug}`} hidden={i !== 0} data-panel>
+          <div class="panel__img">
             <Image src={s.img!} alt={`${s.name} – nábytek na míru`} widths={[600, 900, 1300]} sizes="(max-width: 900px) 92vw, 640px" />
           </div>
-          <div class="services__copy">
+          <div class="panel__copy">
+            <span class="panel__count">{s.count} fotografií v galerii</span>
             <h3>{s.service!.title}</h3>
             {s.service!.paragraphs.map((p) => <p>{p}</p>)}
-            <a class="btn" href={`/realizace/#${s.slug}`}>Prohlédnout dokončené realizace <Icon name="arrow" /></a>
+            <a class="btn" href={`/realizace/#${s.slug}`}>Prohlédnout realizace <Icon name="arrow" /></a>
           </div>
         </div>
       ))}
@@ -42,44 +45,63 @@ const services = categories.filter((c) => c.service).map((c, i) => ({ ...c, img:
 </section>
 
 <style>
-  .services__head { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: end; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
-  .services__head h2 { margin: 0; }
-  .services__tabs { display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: clamp(2rem, 4vw, 3rem); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
-  @media (min-width: 1000px) { .services__tabs { -webkit-mask-image: none; mask-image: none; } }
-  .services__tabs::-webkit-scrollbar { display: none; }
-  .services__tabs button { flex: none; background: none; border: 0; color: #9d9384; font: inherit; font-size: 1rem; padding: 1rem 1.2rem 1.1rem; cursor: pointer; position: relative; display: flex; gap: 0.6rem; align-items: baseline; white-space: nowrap; transition: color 0.3s; }
-  .services__tabs button span { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em; }
-  .services__tabs button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.5s var(--ease); }
-  .services__tabs button[aria-selected='true'] { color: #fff; }
-  .services__tabs button[aria-selected='true']::after, .services__tabs button:hover::after { transform: scaleX(1); }
-  .services__panel { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; animation: panel-in 0.8s var(--ease); }
-  .services__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; }
-  .services__img img { width: 100%; height: 100%; object-fit: cover; }
-  .services__copy p { color: #c4baab; }
-  .services__copy .btn { margin-top: 1rem; }
-  @keyframes panel-in { from { opacity: 0; transform: translateY(16px); } }
+  .tabs { margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .tabs__list {
+    display: inline-flex; gap: 0.35rem; padding: 0.35rem; border-radius: 999px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    max-width: 100%; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity;
+  }
+  .tabs__list::-webkit-scrollbar { display: none; }
+  .tabs__list button {
+    flex: none; scroll-snap-align: center; font: inherit; font-size: 0.95rem; font-weight: 400;
+    color: #c9bfb0; background: transparent; border: 0; border-radius: 999px;
+    padding: 0.75rem 1.35rem; cursor: pointer; white-space: nowrap;
+    transition: background 0.3s, color 0.3s;
+  }
+  .tabs__list button:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  .tabs__list button[aria-selected='true'] { background: var(--gold); color: #fff; }
+
+  .panel { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 5.5rem); align-items: center; animation: panel-in 0.7s var(--ease); }
+  .panel__img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); }
+  .panel__img img { width: 100%; height: 100%; object-fit: cover; }
+  .panel__count { display: block; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+  .panel__copy h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin-bottom: 0.8em; color: #fff; }
+  .panel__copy p { color: #cfc6b8; }
+  .panel__copy p:last-of-type { margin-bottom: 2rem; }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(12px); } }
+
   @media (max-width: 900px) {
-    .services__head, .services__panel { grid-template-columns: 1fr; }
+    .panel { grid-template-columns: 1fr; }
+    .panel__img { aspect-ratio: 16 / 11; }
+  }
+  @media (max-width: 640px) {
+    .tabs__list { display: grid; grid-template-columns: 1fr 1fr; border-radius: 20px; width: 100%; }
+    .tabs__list button { border-radius: 14px; padding: 0.7rem 0.6rem; font-size: 0.9rem; }
   }
 </style>
 
 <script>
   const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-tab]')];
   const panels = [...document.querySelectorAll<HTMLElement>('[data-panel]')];
+  const list = tabs[0]?.parentElement;
   const select = (i: number, focus = false) => {
     tabs.forEach((t, j) => {
       t.setAttribute('aria-selected', String(i === j));
       t.tabIndex = i === j ? 0 : -1;
       panels[j].hidden = i !== j;
     });
-    tabs[i].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
-    if (focus) tabs[i].focus();
+    // keep the active tab visible inside the horizontal list without scrolling the page
+    if (list) {
+      const t = tabs[i];
+      list.scrollTo({ left: t.offsetLeft - (list.clientWidth - t.offsetWidth) / 2, behavior: 'smooth' });
+    }
+    if (focus) tabs[i].focus({ preventScroll: true });
   };
   tabs.forEach((t, i) => {
     t.addEventListener('click', () => select(i));
     t.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') select((i + 1) % tabs.length, true);
-      if (e.key === 'ArrowLeft') select((i - 1 + tabs.length) % tabs.length, true);
+      if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % tabs.length, true); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
     });
   });
 </script>
