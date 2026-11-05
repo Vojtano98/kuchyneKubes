@@ -3,18 +3,27 @@ import { Image } from 'astro:assets';
 interface Props { title: string; eyebrow?: string; lead?: string; image?: ImageMetadata; imageAlt?: string; focus?: string }
 const { title, eyebrow, lead, image, imageAlt = '', focus } = Astro.props;
 ---
-<section class="page-hero">
-  <div class:list={['container page-hero__grid', { 'page-hero__grid--text': !image }]}>
-    <div class="page-hero__text">
+{image ? (
+  <section class="photo-hero">
+    <div class="photo-hero__media" style={focus ? `--focus:${focus}` : undefined}>
+      <Image src={image} alt={imageAlt} widths={[768, 1280, 1920, 2560]} sizes="100vw" loading="eager" priority quality={75} />
+    </div>
+    <div class="container photo-hero__content">
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h1>{title}</h1>
       {lead && <p class="lead">{lead}</p>}
       <slot />
     </div>
-    {image && (
-      <div class="page-hero__media" style={focus ? `--focus:${focus}` : undefined}>
-        <Image src={image} alt={imageAlt} widths={[600, 900, 1300]} sizes="(max-width: 860px) 92vw, 620px" loading="eager" priority />
+  </section>
+) : (
+  <section class="page-hero">
+    <div class="container page-hero__grid page-hero__grid--text">
+      <div class="page-hero__text">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h1>{title}</h1>
+        {lead && <p class="lead">{lead}</p>}
+        <slot />
       </div>
-    )}
-  </div>
-</section>
+    </div>
+  </section>
+)}

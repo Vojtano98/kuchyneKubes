@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Gallery from '../components/Gallery.astro';
+import PageHero from '../components/PageHero.astro';
 import InquiryForm from '../components/InquiryForm.astro';
 import Icon from '../components/Icon.astro';
 import { folder } from '../lib/images';
@@ -21,16 +22,17 @@ const equipment = [
   'jídelní stůl + židle',
 ];
 ---
-<Base title="Kuchyň na prodej za zvýhodněnou cenu" description="Vystavená a kompletně vybavená kuchyň z našeho kuchyňského studia s 50% slevou. Rozměr 384 × 254 cm, výška 193 cm." image={imgs[0]}>
+<Base title="Kuchyň na prodej za zvýhodněnou cenu" description="Vystavená a kompletně vybavená kuchyň z našeho kuchyňského studia s 50% slevou. Rozměr 384 × 254 cm, výška 193 cm." image={imgs[0]} transparentHeader>
+  <PageHero eyebrow="Akční nabídka" title="Kuchyň na prodej" lead="Vystavená a kompletně vybavená kuchyň z našeho studia se slevou 50 %." image={imgs[1]} imageAlt="Vystavená kuchyň na prodej v kuchyňském studiu" focus="50% 55%" />
+
   <section class="offer">
     <div class="container offer__grid">
       <div class="offer__media">
-        <Image src={imgs[0]} alt="Vystavená kuchyň na prodej" widths={[600, 1000, 1400]} sizes="(max-width: 900px) 92vw, 640px" loading="eager" priority />
+        <Image src={imgs[0]} alt="Vystavená kuchyň na prodej" widths={[600, 1000, 1400]} sizes="(max-width: 900px) 92vw, 640px" />
         <span class="offer__badge">−50&nbsp;%</span>
       </div>
       <div class="offer__text">
-        <p class="eyebrow">Kuchyň na prodej</p>
-        <h1>Kompletně vybavená kuchyň za zvýhodněnou cenu</h1>
+        <h2>Kompletně vybavená kuchyň na prodej za zvýhodněnou cenu</h2>
         <p class="lead">V rámci neustálého zlepšování a inovací vám nabízíme za bezkonkurenční cenu vystavenou a kompletně vybavenou kuchyň z našeho kuchyňského studia.</p>
         <dl class="offer__spec">
           <div><dt>Rozměr</dt><dd>384 × 254 cm, výška 193 cm</dd></div>
@@ -77,8 +79,8 @@ const equipment = [
 </Base>
 
 <style>
-  .offer { padding: calc(var(--header-h) + clamp(1.75rem, 4vw, 3rem)) 0 clamp(2.5rem, 5vw, 4rem); }
-  .offer h1 { font-size: clamp(1.9rem, 3.3vw, 2.75rem); }
+  .offer { padding: clamp(2.5rem, 5vw, 4rem) 0; }
+  .offer h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
   .offer .lead { margin-bottom: 1.8rem; }
   .offer-gallery { padding-top: clamp(2.5rem, 5vw, 3.5rem); }
   .offer-gallery__head h2 { margin-bottom: 0.3em; }

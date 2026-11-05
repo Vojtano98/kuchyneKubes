@@ -4,10 +4,10 @@ import PageHero from '../components/PageHero.astro';
 import Gallery from '../components/Gallery.astro';
 import Inquiry from '../components/Inquiry.astro';
 import { folder } from '../lib/images';
-const cover = folder('kuchyne')[4];
+const cover = folder('kuchyne')[12];
 ---
-<Base title="Galerie realizací – kuchyně a nábytek na míru" description="Galerie hotových realizací truhlářství David Kubeš: kuchyně, ložnice, chodby, koupelny, dětské a obývací pokoje na míru." image={cover}>
-  <PageHero eyebrow="Realizace" title="Galerie realizací" lead="Hotové realizace u zákazníků – kuchyně, ložnice, chodby, koupelny, dětské i obývací pokoje na míru. Vyberte kategorii a fotografie si prohlédněte ve velkém." />
+<Base title="Galerie realizací – kuchyně a nábytek na míru" description="Galerie hotových realizací truhlářství David Kubeš: kuchyně, ložnice, chodby, koupelny, dětské a obývací pokoje na míru." image={cover} transparentHeader>
+  <PageHero eyebrow="Realizace" title="Galerie realizací" lead="Hotové realizace u zákazníků – kuchyně, ložnice, chodby, koupelny, dětské i obývací pokoje na míru." image={cover} imageAlt="Kuchyň na míru s ostrůvkem" focus="50% 60%" />
   <Gallery />
   <Inquiry />
 </Base>

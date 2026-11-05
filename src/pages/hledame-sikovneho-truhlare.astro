@@ -9,11 +9,11 @@ const [banner] = folder('truhlar');
 const heroImg = folder('hero')[0];
 const [prodejna] = folder('onas');
 ---
-<Base title="Hledáme šikovného truhláře" description="Hledáme šikovného truhláře pro zakázkovou výrobu nábytku a kuchyní. Dílna a showroom ve Svinném u Chotěboře." image={banner}>
-  <PageHero eyebrow="Kariéra" title="Hledáme šikovného truhláře" lead="Pro zakázkovou výrobu nábytku a kuchyní. Přidej se k týmu, který tvoří kuchyně srdcem." image={heroImg} imageAlt="Truhlář v kuchyni na míru" focus="82% 50%">
+<Base title="Hledáme šikovného truhláře" description="Hledáme šikovného truhláře pro zakázkovou výrobu nábytku a kuchyní. Dílna a showroom ve Svinném u Chotěboře." image={banner} transparentHeader>
+  <PageHero eyebrow="Kariéra" title="Hledáme šikovného truhláře" lead="Pro zakázkovou výrobu nábytku a kuchyní. Přidej se k týmu, který tvoří kuchyně srdcem." image={heroImg} imageAlt="Truhlář v kuchyni na míru" focus="70% 35%">
     <div class="job-hero__ctas">
       <a class="btn" href={`mailto:${site.email}?subject=Z%C3%A1jem%20o%20pozici%20truhl%C3%A1%C5%99e`}>Napsat pár řádků o sobě <Icon name="arrow" /></a>
-      <a class="btn btn--outline" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+      <a class="btn btn--ghost" href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
     </div>
   </PageHero>
 
@@ -59,7 +59,7 @@ const [prodejna] = folder('onas');
 </Base>
 
 <style>
-  .job-hero__ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 2rem; }
+  .job-hero__ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem; }
   .job__intro { max-width: 760px; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
   .job__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 2rem); }
   .job__card { background: var(--cream); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); }
