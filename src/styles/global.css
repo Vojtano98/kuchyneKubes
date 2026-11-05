@@ -402,6 +402,7 @@ body:has(.header:not(.is-hidden)) .filters {
   inset: 0;
   background:
     linear-gradient(0deg, rgba(15, 12, 9, 0.6) 0%, rgba(15, 12, 9, 0.28) 32%, rgba(15, 12, 9, 0) 58%),
+    linear-gradient(90deg, rgba(15, 12, 9, 0.34) 0%, rgba(15, 12, 9, 0.12) 40%, rgba(15, 12, 9, 0) 60%),
     linear-gradient(180deg, rgba(15, 12, 9, 0.35) 0%, rgba(15, 12, 9, 0) 22%);
 }
 .photo-hero__content {
@@ -411,7 +412,10 @@ body:has(.header:not(.is-hidden)) .filters {
   text-shadow: 0 1px 14px rgba(0, 0, 0, 0.3);
 }
 .photo-hero__content .eyebrow {
-  color: var(--gold-light);
+  color: #fff;
+}
+.photo-hero__content .eyebrow::before {
+  background: var(--gold-light);
 }
 .photo-hero h1 {
   font-size: clamp(2.3rem, 5vw, 3.9rem);
