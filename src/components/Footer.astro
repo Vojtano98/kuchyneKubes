@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import logo from '../assets/img/brand/logo.png';
+import logoUrl from '../assets/img/brand/logo.svg?url';
 import Icon from './Icon.astro';
 import { site, branches } from '../data/site';
 const year = new Date().getFullYear();
@@ -8,7 +7,7 @@ const year = new Date().getFullYear();
 <footer class="footer">
   <div class="container footer__grid">
     <div class="footer__brand">
-      <Image src={logo} alt={site.name} width={127} height={73} />
+      <img src={logoUrl} alt={site.name} width="127" height="73" loading="lazy" />
       <p>Kuchyně a nábytek na míru přesně podle vašich představ. Vlastní dílna a vzorkové kuchyňské studio v Chotěboři.</p>
       <a class="footer__social" href={site.facebook} target="_blank" rel="noopener"><Icon name="facebook" size={18} /> Facebook</a>
     </div>

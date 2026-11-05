@@ -31,6 +31,7 @@ const jsonLd = {
   name: site.name,
   url: Astro.site?.toString(),
   image: ogUrl.toString(),
+  logo: new URL('/logo.png', Astro.site).toString(),
   telephone: site.phone,
   email: site.email,
   taxID: site.dic,

@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import logo from '../assets/img/brand/logo.png';
+import logoUrl from '../assets/img/brand/logo.svg?url';
 import Icon from './Icon.astro';
 import { nav, site } from '../data/site';
 
@@ -10,7 +9,7 @@ const path = Astro.url.pathname;
 <header class:list={['header', { 'header--transparent': transparent }]} data-header>
   <div class="header__inner container">
     <a href="/" class="header__logo" aria-label={`${site.name} – úvodní stránka`}>
-      <Image src={logo} alt={site.name} width={127} height={73} loading="eager" priority />
+      <img src={logoUrl} alt={site.name} width="127" height="73" fetchpriority="high" />
     </a>
     <nav class="header__nav" aria-label="Hlavní navigace">
       <ul>

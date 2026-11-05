@@ -30,3 +30,8 @@ Po prvním nasazení v Netlify: *Site configuration → Forms → Form notificat
 
 Netlify: *Add new site → Import from GitHub* → tento repozitář. Nastavení buildu je v `netlify.toml`.
 Staré WordPress adresy jsou přesměrované (viz `netlify.toml`).
+
+## Logo
+
+Vektorová verze loga je ve složce `brand/` (SVG pro web a tisk, PNG s průhledným pozadím ve vysokém rozlišení, JPG na bílém pozadí).
+Logo bylo převedeno do vektoru z původního PNG (127 × 73 px); na webu se používá `src/assets/img/brand/logo.svg`.
