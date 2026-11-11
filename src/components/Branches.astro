@@ -5,6 +5,17 @@ import { branches, site } from '../data/site';
 import { folder } from '../lib/images';
 const photos: Record<string, ImageMetadata | undefined> = { chotebor: folder('onas')[0], pardubice: folder('vzorovy-byt')[0] };
 // Shop photo is portrait: keep the roof and sign in frame. The apartment photo stays centred.
+// Phones show the opening hours grouped (Po–Pá …) instead of seven rows
+const groupHours = (hours: string[][]) => {
+  const out: [string, string][] = [];
+  let start = 0;
+  hours.forEach(([, h], i) => {
+    if (i + 1 < hours.length && hours[i + 1][1] === h) return;
+    out.push([start === i ? hours[i][0] : `${hours[start][0]}–${hours[i][0]}`, h]);
+    start = i + 1;
+  });
+  return out;
+};
 const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%' };
 ---
 <section class="section branches" id="pobocky">
@@ -29,8 +40,11 @@ const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%
             {b.hours.length > 0 && (
               <div class="branch__hours">
                 <p class="branch__label"><Icon name="clock" size={18} /> Otevírací doba</p>
-                <dl>
+                <dl class="branch__hours-full">
                   {b.hours.map(([d, h]) => (<><dt>{d}</dt><dd>{h}</dd></>))}
+                </dl>
+                <dl class="branch__hours-short">
+                  {groupHours(b.hours).map(([d, h]) => (<><dt>{d}</dt><dd>{h}</dd></>))}
                 </dl>
               </div>
             )}
@@ -80,6 +94,19 @@ const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%
   .branches__billing h3 { font-size: 1rem; margin: 0; }
   .branches__billing p { margin: 0; color: var(--muted); }
   @media (max-width: 860px) { .branches__grid { grid-template-columns: 1fr; } }
+  .branch__hours dl.branch__hours-short { display: none; }
+  @media (max-width: 560px) {
+    .branch__map { aspect-ratio: 2 / 1; }
+    .branch__body { padding: 1.2rem 1.2rem 1.3rem; }
+    .branch h3 { margin-bottom: 0.7rem; }
+    .branch__addr, .branch__label { margin-bottom: 0.6rem; }
+    .branch__hours dl.branch__hours-full { display: none; }
+    .branch__hours dl.branch__hours-short { display: grid; }
+    .branch__hours dl { margin-bottom: 0.8rem; }
+    .branch__tip { margin-bottom: 0.6rem; }
+    .branch__actions { padding-top: 0.6rem; }
+    .branches__billing { padding: 1.1rem 1.2rem; }
+  }
 </style>
 
 <script>

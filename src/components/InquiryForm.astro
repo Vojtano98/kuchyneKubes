@@ -91,6 +91,11 @@ const types = ['Kuchyně', 'Ložnice nebo šatna', 'Chodba', 'Koupelna', 'Dětsk
   .form__status.is-ok { background: #edf6ea; color: #24572b; }
   .form__status.is-error { background: #fbeceb; color: #8c2a20; }
   @media (max-width: 560px) { .form__grid { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 560px) {
+    .form__grid { gap: 0.75rem; }
+    .field textarea { min-height: 110px; }
+    .form__note { margin: 0.8rem 0 1rem; }
+  }
 </style>
 
 <script define:vars={{ phone: site.phone }}>

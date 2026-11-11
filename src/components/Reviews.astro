@@ -39,5 +39,12 @@ import { reviews, reviewsSource } from '../data/reviews';
   .review figcaption strong { color: var(--ink); font-weight: 500; }
   .review figcaption span { font-size: 0.85rem; color: var(--muted); }
   .reviews__more { margin-top: clamp(1.25rem, 3vw, 2rem); }
-  @media (max-width: 760px) { .reviews__grid { grid-template-columns: 1fr; } }
+  /* Phones: cards side by side, swipe sideways (the next card peeks in) */
+  @media (max-width: 760px) {
+    .reviews__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+    .reviews__grid::-webkit-scrollbar { display: none; }
+    .review { scroll-snap-align: start; padding: 1.4rem; }
+    .review blockquote { margin-bottom: 1.1rem; }
+    .review blockquote p { font-size: 1rem; line-height: 1.6; }
+  }
 </style>

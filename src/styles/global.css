@@ -498,8 +498,25 @@ strong {
 }
 
 @media (max-width: 560px) {
+  /* Phones: tighter rhythm so pages are not stretched (desktop keeps the airy 1.75) */
   body {
     font-size: 1rem;
+    line-height: 1.6;
+  }
+  p {
+    margin-bottom: 0.9em;
+  }
+  .section {
+    padding-block: 2.4rem;
+  }
+  .lead {
+    font-size: 1.02rem;
+  }
+  .section-head {
+    margin-bottom: 1.4rem;
+  }
+  .eyebrow {
+    margin-bottom: 0.8rem;
   }
   .btn {
     min-height: 46px;
