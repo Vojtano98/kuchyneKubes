@@ -22,7 +22,7 @@ Nový web truhlářství David Kubeš (kuchyně a nábytek na míru, dílna a vz
 - Zlatá: tlačítka `#c19031` s **bílým** textem (přání majitele), zlaté texty na světlém pozadí tmavší `#8a6723`, na tmavém `#d7ac56`.
 - Tlačítka hranatá (radius 2px), malá, velká prostrkaná písmena. Malé zaoblení rohů (6–10px), jemné stíny.
 - Hlavička vždy viditelná; v hero plná velikost a průhledná, po scrollu menší a neprůhledná.
-- Slider na úvodu přepíná po 4,5 s, má tlačítko pauzy.
+- Slider na úvodu přepíná po 6,5 s (prolínání 1,8 s), má tlačítko pauzy.
 - Odsazení sekcí střídmé (majitel nechce velké mezery).
 
 ## Otevřené body (čekají na podklady od majitele)

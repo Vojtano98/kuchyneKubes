@@ -9,8 +9,8 @@ const living = folder('obyvaci-pokoje');
 // Texts and targets taken over from the original website; photos swapped for the sharpest modern realizations.
 const slides = [
   { img: kitchens[227], kicker: 'Kuchyně na míru', title: 'Tvoříme kuchyně na míru vašim představám', link: ['Prohlédnout realizace', '/realizace/'] },
-  { img: kitchens[251], kicker: 'Realizace', title: 'Kuchyně propracované do posledního detailu', link: ['Dokončené realizace', '/realizace/'] },
-  { img: living[9], kicker: 'Obývací stěny na míru', title: 'Kuchyně i obývací stěny na míru', link: ['Prohlédnout realizace', '/realizace/#obyvaci-pokoje'] },
+  { img: kitchens[251], kicker: 'Realizace', title: 'Kuchyně propracované do posledního detailu', link: ['Dokončené kuchyně', '/realizace/#kuchyne'] },
+  { img: living[9], kicker: 'Obývací pokoje', title: 'Obývací stěny na míru', link: ['Prohlédnout obývací pokoje', '/realizace/#obyvaci-pokoje'] },
   { img: imgs[4], kicker: 'Akční nabídka', title: 'Vystavená kuchyň na prodej za akční cenu', link: ['Prohlédnout zblízka', '/kuchyn-na-prodej/'] },
 ];
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -50,10 +50,10 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .hero__slide.is-active { opacity: 1; visibility: visible; transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s; z-index: 1; }
   .hero__media { position: absolute; inset: 0; }
   /* slow cinematic push-in */
-  .hero__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: transform 6s cubic-bezier(0.25, 0.1, 0.25, 1); }
+  .hero__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: transform 8s cubic-bezier(0.25, 0.1, 0.25, 1); }
   .is-active .hero__media img { transform: scale(1.02); }
   /* The first slide is active straight from the HTML, so the transition never runs: play the same zoom as a keyframe */
-  .hero__slide:first-child.is-active .hero__media img { animation: hero-zoom 6s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
+  .hero__slide:first-child.is-active .hero__media img { animation: hero-zoom 8s cubic-bezier(0.25, 0.1, 0.25, 1) both; }
   @keyframes hero-zoom { from { transform: scale(1.1); } to { transform: scale(1.02); } }
   /* modern black fade rising from the bottom (eased stops, no visible band) + a faint warm gold glow under the text;
      a light top shade keeps the transparent header readable. The photo stays the hero. */
@@ -114,7 +114,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   if (hero) {
     const slides = [...hero.querySelectorAll<HTMLElement>('[data-slide]')];
     const dots = [...hero.querySelectorAll<HTMLButtonElement>('[data-dot]')];
-    const DURATION = 4500;
+    const DURATION = 6500;
     hero.style.setProperty('--hero-duration', `${DURATION}ms`);
     let current = 0;
     let timer: number | undefined;

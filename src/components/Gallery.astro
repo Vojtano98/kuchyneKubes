@@ -4,8 +4,11 @@ import Icon from './Icon.astro';
 import { categories } from '../data/categories';
 import { folder } from '../lib/images';
 
-interface Props { only?: string[]; filters?: boolean; headings?: boolean }
-const { only, filters = true, headings = true } = Astro.props;
+interface Props { only?: string[]; filters?: boolean; headings?: boolean; pageSize?: number }
+// pageSize: photos shown per category before "Zobrazit další" (long categories would otherwise be 25 phone screens)
+const { only, filters = true, headings = true, pageSize = 24 } = Astro.props;
+// The sale kitchen has its own page; it is not a customer realization
+const notRealizations = ['kuchyn-na-prodej'];
 
 const orderFeatured = <T,>(list: T[], featured: number[] = []) => {
   const first = featured.map((i) => list[i]).filter(Boolean);
@@ -13,7 +16,7 @@ const orderFeatured = <T,>(list: T[], featured: number[] = []) => {
 };
 const groups = await Promise.all(
   categories
-    .filter((c) => !only || only.includes(c.slug))
+    .filter((c) => (only ? only.includes(c.slug) : !notRealizations.includes(c.slug)))
     .map(async (c) => ({
       ...c,
       items: await Promise.all(
@@ -43,12 +46,20 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
       </div>
       <div class="gallery__grid">
         {g.items.map(({ img, large }, i) => (
-          <a class="gallery__item" href={large.src} data-lb data-w={large.attributes.width} data-h={large.attributes.height} data-caption={g.name}>
+          <a class="gallery__item" href={large.src} hidden={i >= pageSize} data-lb data-w={large.attributes.width} data-h={large.attributes.height} data-caption={g.name}>
             <Image src={img} alt={`${g.name} – realizace ${i + 1}`} widths={[360, 560, 800]} sizes="(max-width: 560px) 46vw, (max-width: 1000px) 31vw, 300px" quality={70} />
             <span class="gallery__zoom" aria-hidden="true"><Icon name="expand" size={18} /></span>
           </a>
         ))}
       </div>
+      {g.items.length > pageSize && (
+        <div class="gallery__more">
+          <button type="button" class="btn btn--outline" data-more data-step={pageSize}>
+            Zobrazit další fotografie <span data-more-count>({g.items.length - pageSize})</span>
+          </button>
+          <p class="gallery__shown" aria-live="polite" data-shown>Zobrazeno {pageSize} z {g.items.length}</p>
+        </div>
+      )}
     </section>
   ))}
 </div>
@@ -94,6 +105,8 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
   .gallery__item:hover img { transform: scale(1.04); }
   .gallery__zoom { position: absolute; right: 0.7rem; top: 0.7rem; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.92); color: var(--ink); display: grid; place-items: center; opacity: 0; transform: scale(0.8); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
   .gallery__item:hover .gallery__zoom { opacity: 1; transform: none; color: var(--gold); }
+  .gallery__more { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-top: clamp(1.25rem, 3vw, 2rem); }
+  .gallery__shown { margin: 0; font-size: 0.85rem; color: var(--muted); }
   @media (max-width: 560px) { .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   .lb { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(12, 10, 8, 0.97); color: #fff; overscroll-behavior: contain; }
@@ -161,6 +174,22 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
       fromHash();
       if (location.hash) requestAnimationFrame(() => scrollToGallery('instant'));
     }
+
+    // "Zobrazit další": reveal the next batch of hidden photos in that category
+    root.querySelectorAll<HTMLButtonElement>('[data-more]').forEach((btn) => {
+      const group = btn.closest<HTMLElement>('[data-group]')!;
+      const wrap = btn.parentElement!;
+      btn.addEventListener('click', () => {
+        const all = [...group.querySelectorAll<HTMLElement>('[data-lb]')];
+        const rest = all.filter((a) => a.hidden);
+        rest.slice(0, Number(btn.dataset.step)).forEach((a) => (a.hidden = false));
+        const left = rest.length - Number(btn.dataset.step);
+        const shown = all.length - Math.max(left, 0);
+        wrap.querySelector('[data-shown]')!.textContent = `Zobrazeno ${shown} z ${all.length}`;
+        if (left > 0) btn.querySelector('[data-more-count]')!.textContent = `(${left})`;
+        else btn.remove();
+      });
+    });
 
     const show = (i: number) => {
       index = (i + items.length) % items.length;

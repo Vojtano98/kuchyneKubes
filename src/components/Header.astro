@@ -19,7 +19,7 @@ const path = Astro.url.pathname.slice(import.meta.env.BASE_URL.length - 1) || '/
       </ul>
     </nav>
     <div class="header__actions">
-      <a class="header__phone" href={site.phoneHref}><Icon name="phone" size={18} /><span>{site.phone}</span></a>
+      <a class="header__phone" href={site.phoneHref} aria-label={`Zavolat ${site.phone}`}><Icon name="phone" size={18} /><span>{site.phone}</span></a>
       <a class="btn header__cta" href="/#poptavka">Nezávazná poptávka</a>
       <button class="header__burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
         <span class="visually-hidden">Otevřít menu</span>

@@ -1,8 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import InquiryForm from './InquiryForm.astro';
 import Icon from './Icon.astro';
-import mm from '../assets/img/brand/mm-spotrebice.png';
 import { site } from '../data/site';
 ---
 <section class="section inquiry" id="poptavka">
@@ -15,10 +13,6 @@ import { site } from '../data/site';
         <li><a href={site.phoneHref}><span class="inquiry__icon"><Icon name="phone" /></span><span><small>Zavolejte nám</small>{site.phone}</span></a></li>
         <li><a href={`mailto:${site.email}`}><span class="inquiry__icon"><Icon name="mail" /></span><span><small>Napište nám</small>{site.email}</span></a></li>
       </ul>
-      <a class="partner" href={site.partner.url} target="_blank" rel="noopener" data-reveal>
-        <Image src={mm} alt={site.partner.name} width={229} height={60} />
-        <small>Spotřebiče do kuchyní v té nejvyšší kvalitě dodává česká rodinná firma</small>
-      </a>
     </div>
     <div class="inquiry__card" data-reveal>
       <InquiryForm />
@@ -35,10 +29,6 @@ import { site } from '../data/site';
   .inquiry__icon { width: 50px; height: 50px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #fff; border: 1px solid var(--line); color: var(--gold-dark); transition: background 0.3s, color 0.3s, border-color 0.3s; }
   .inquiry__contacts a:hover .inquiry__icon { background: var(--gold-fill); color: #fff; border-color: var(--gold-fill); }
   .inquiry__contacts small { display: block; font-size: 0.72rem; font-weight: 500; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.4; }
-  .partner { display: flex; align-items: center; gap: 1.2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); text-decoration: none; color: var(--muted); }
-  .partner img { height: 42px; width: auto; flex: none; }
-  .partner small { font-size: 0.82rem; line-height: 1.5; max-width: 28ch; }
   .inquiry__card { background: #fff; border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.75rem); box-shadow: 0 30px 60px -35px rgba(21, 18, 14, 0.35); }
   @media (max-width: 900px) { .inquiry__grid { grid-template-columns: 1fr; } }
-  @media (max-width: 480px) { .partner { flex-direction: column; align-items: flex-start; } }
 </style>
