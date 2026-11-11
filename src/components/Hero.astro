@@ -10,7 +10,7 @@ const living = folder('obyvaci-pokoje');
 const slides = [
   { img: kitchens[227], kicker: 'Kuchyně na míru', title: 'Tvoříme kuchyně na míru vašim představám', link: ['Prohlédnout realizace', '/realizace/'] },
   { img: kitchens[251], kicker: 'Realizace', title: 'Kuchyně propracované do posledního detailu', link: ['Dokončené kuchyně', '/realizace/#kuchyne'] },
-  { img: living[9], kicker: 'Obývací pokoje', title: 'Obývací stěny na míru', link: ['Prohlédnout obývací pokoje', '/realizace/#obyvaci-pokoje'] },
+  { img: living[9], kicker: 'Obývací pokoje', title: 'Obývací stěny na míru', link: ['Obývací pokoje', '/realizace/#obyvaci-pokoje'] },
   { img: imgs[4], kicker: 'Akční nabídka', title: 'Vystavená kuchyň na prodej za akční cenu', link: ['Prohlédnout zblízka', '/kuchyn-na-prodej/'] },
 ];
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -71,7 +71,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .hero__kicker::before, .hero__kicker::after { content: ''; width: 2.4rem; height: 1px; background: linear-gradient(90deg, rgba(227, 199, 143, 0), var(--gold-soft)); }
   .hero__kicker::after { transform: scaleX(-1); }
   .hero h1, .hero__title { font-size: clamp(2.1rem, 4.6vw, 4.1rem); font-weight: 300; line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch; margin: 0 auto 1.6rem; text-wrap: balance; }
-  .hero__link { display: inline-block; color: #fff; text-decoration: none; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; padding: 0.95rem 1.8rem; border: 1px solid rgba(227, 199, 143, 0.6); background: rgba(8, 7, 6, 0.18); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s var(--ease); text-shadow: none; }
+  .hero__link { display: inline-block; white-space: nowrap; color: #fff; text-decoration: none; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; padding: 0.95rem 1.8rem; border: 1px solid rgba(227, 199, 143, 0.6); background: rgba(8, 7, 6, 0.18); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s var(--ease); text-shadow: none; }
   .hero__link:hover { background: var(--gold-fill); color: #fff; border-color: var(--gold-fill); box-shadow: 0 14px 30px -14px rgba(193, 144, 49, 0.75); }
   .hero__content > * { opacity: 0; transform: translateY(16px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
   .is-active .hero__content > * { opacity: 1; transform: none; }
