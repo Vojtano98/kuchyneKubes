@@ -59,7 +59,7 @@ const types = ['Kuchyně', 'Ložnice nebo šatna', 'Chodba', 'Koupelna', 'Dětsk
 </form>
 
 <style>
-  .form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
   .field { position: relative; }
   .field--full { grid-column: 1 / -1; }
   .field input, .field textarea {
@@ -73,10 +73,10 @@ const types = ['Kuchyně', 'Ložnice nebo šatna', 'Chodba', 'Koupelna', 'Dětsk
   .field select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(138, 103, 35,0.15); }
   .field--select label { transform: translateY(-0.6rem); font-size: 0.74rem; color: var(--gold-dark); }
   .form__hint { margin: -0.4rem 0 0; font-size: 0.82rem; color: var(--muted); }
-  .form__file { display: grid; gap: 0.5rem; padding: 1rem 1.1rem; border: 1px dashed rgba(21,18,14,0.22); border-radius: var(--radius-btn); background: var(--paper); }
+  .form__file { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; gap: 0.5rem; padding: 1rem 1.1rem; border: 1px dashed rgba(21,18,14,0.22); border-radius: var(--radius-btn); background: var(--paper); }
   .form__file label { font-size: 0.9rem; color: var(--ink); }
   .form__file label span { color: var(--muted); font-size: 0.82rem; }
-  .form__file input { font: inherit; font-size: 0.85rem; color: var(--muted); max-width: 100%; }
+  .form__file input { font: inherit; font-size: 0.85rem; color: var(--muted); width: 100%; min-width: 0; max-width: 100%; }
   .form__file input::file-selector-button { font: inherit; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; margin-right: 0.9rem; padding: 0.6rem 1rem; border: 1px solid rgba(21,18,14,0.28); border-radius: var(--radius-btn); background: #fff; color: var(--ink); cursor: pointer; }
   .field label { position: absolute; left: 1.1rem; top: 1.05rem; color: var(--muted); font-size: 1rem; pointer-events: none; transition: transform 0.25s var(--ease), font-size 0.25s, color 0.25s; transform-origin: left top; }
   .field input:focus, .field textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(138, 103, 35,0.15); }
@@ -90,7 +90,7 @@ const types = ['Kuchyně', 'Ložnice nebo šatna', 'Chodba', 'Koupelna', 'Dětsk
   .form__status:not(:empty) { margin-top: 1rem; padding: 1rem 1.2rem; border-radius: var(--radius-btn); font-weight: 400; }
   .form__status.is-ok { background: #edf6ea; color: #24572b; }
   .form__status.is-error { background: #fbeceb; color: #8c2a20; }
-  @media (max-width: 560px) { .form__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .form__grid { grid-template-columns: minmax(0, 1fr); } }
 </style>
 
 <script define:vars={{ phone: site.phone }}>

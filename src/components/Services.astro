@@ -58,7 +58,7 @@ const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: fo
     color: #d9d1c4; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.18); border-radius: var(--radius-btn);
     padding: 0.85rem 1.1rem; min-height: 48px; cursor: pointer; transition: color 0.3s, background 0.3s, border-color 0.3s;
   }
-  .tabs__count { font-size: 0.68rem; letter-spacing: 0.04em; color: #8f8578; font-variant-numeric: tabular-nums; transition: color 0.3s; }
+  .tabs__count { font-size: 0.74rem; letter-spacing: 0.04em; color: #8f8578; font-variant-numeric: tabular-nums; transition: color 0.3s; }
   .tabs__list button:hover { color: #fff; border-color: rgba(255,255,255,0.45); }
   .tabs__list button[aria-selected='true'] { color: #fff; background: var(--gold-fill); border-color: var(--gold-fill); }
   .tabs__list button[aria-selected='true'] .tabs__count { color: rgba(255,255,255,0.85); }
@@ -67,7 +67,7 @@ const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: fo
   .panel__img { position: relative; display: block; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); box-shadow: 0 0 0 1px rgba(227, 199, 143, 0.18), 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
   .panel__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
   .panel__img:hover img { transform: scale(1.03); }
-  .panel__more { position: absolute; right: 0.9rem; bottom: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.9rem; background: rgba(15, 12, 9, 0.72); backdrop-filter: blur(6px); color: #fff; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; border-radius: var(--radius-btn); }
+  .panel__more { position: absolute; right: 0.9rem; bottom: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.9rem; background: rgba(15, 12, 9, 0.72); backdrop-filter: blur(6px); color: #fff; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border-radius: var(--radius-btn); }
   .panel__more :global(svg) { color: var(--gold-light); }
   .panel__copy h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin-bottom: 0.8em; color: #fff; }
   .panel__copy p { color: #cfc6b8; }
@@ -80,8 +80,10 @@ const services = categories.filter((c) => c.service).map((c) => ({ ...c, img: fo
   }
   @media (max-width: 640px) {
     .tabs__list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-    .tabs__list button { padding: 0.75rem 0.8rem; font-size: 0.66rem; letter-spacing: 0.1em; gap: 0.5rem; }
+    .tabs__list button { padding: 0.75rem 0.7rem; font-size: 0.72rem; letter-spacing: 0.06em; gap: 0.4rem; }
   }
+  /* Narrowest phones: let long names wrap instead of pushing the grid wider than the screen */
+  @media (max-width: 360px) { .tabs__list { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .tabs__list button { white-space: normal; text-align: left; line-height: 1.3; min-width: 0; } }
 </style>
 
 <script>

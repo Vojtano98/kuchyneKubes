@@ -83,20 +83,21 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .hero__count b { font-weight: 500; color: var(--gold-soft); }
   .hero__count i { width: 1.2rem; height: 1px; background: rgba(227, 199, 143, 0.55); }
   .hero__dots { display: flex; gap: 0.4rem; }
-  .hero__dots button { background: none; border: 0; cursor: pointer; padding: 0.7rem 0; }
+  .hero__dots button { background: none; border: 0; cursor: pointer; padding: 1.35rem 0; }
   .hero__dot-bar { display: block; width: clamp(26px, 3.2vw, 44px); height: 1px; background: rgba(255, 255, 255, 0.35); overflow: hidden; }
   .hero__dot-bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--gold-fill), var(--gold-soft)); transform: scaleX(0); transform-origin: left; }
   [aria-selected='true'] .hero__dot-bar i { animation: hero-progress var(--hero-duration, 7s) linear forwards; }
   .hero.is-paused [aria-selected='true'] .hero__dot-bar i { animation-play-state: paused; }
   @keyframes hero-progress { to { transform: scaleX(1); } }
-  .hero__pause { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.4); background: transparent; color: #fff; display: grid; place-items: center; cursor: pointer; transition: background 0.3s, color 0.3s; }
+  .hero__pause { position: relative; width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.4); background: transparent; color: #fff; display: grid; place-items: center; cursor: pointer; transition: background 0.3s, color 0.3s; }
+  .hero__pause::after { content: ''; position: absolute; inset: -9px; } /* 46px touch area */
   .hero__pause:hover { background: var(--gold-fill); border-color: var(--gold-fill); color: #fff; }
   .hero__pause :global(.i-play), .hero__pause[aria-pressed='true'] :global(.i-pause) { display: none; }
   .hero__pause[aria-pressed='true'] :global(.i-play) { display: block; }
   @media (max-width: 760px) {
     .hero { height: 88svh; }
     .hero__content { padding-bottom: 5.5rem; }
-    .hero__kicker { font-size: 0.68rem; letter-spacing: 0.26em; margin-bottom: 0.9rem; }
+    .hero__kicker { font-size: 0.72rem; letter-spacing: 0.24em; margin-bottom: 0.9rem; }
     .hero__kicker::before, .hero__kicker::after { width: 1.25rem; }
     .hero h1, .hero__title { font-size: clamp(1.85rem, 8vw, 2.4rem); margin-bottom: 1.3rem; }
     .hero__count { display: none; }
