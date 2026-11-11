@@ -35,6 +35,7 @@ const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%
               </div>
             )}
             {b.note && <p class="branch__label"><Icon name="clock" size={18} /> {b.note}</p>}
+            {b.hours.length > 0 && <p class="branch__tip">Nestíháte v otevírací době? Zavolejte, návštěvu si domluvíme i mimo ni, včetně víkendu.</p>}
             <div class="branch__actions">
               <a class="link-arrow" href={b.mapLink} target="_blank" rel="noopener">Navigovat <Icon name="arrow" size={16} /></a>
               <a class="link-arrow" href={site.phoneHref}>Domluvit návštěvu <Icon name="arrow" size={16} /></a>
@@ -73,6 +74,7 @@ const focus: Record<string, string> = { chotebor: '50% 12%', pardubice: '50% 55%
   .branch__hours dl { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 1.5rem; margin: 0 0 1rem 1.75rem; font-size: 0.95rem; }
   .branch__hours dt { color: var(--muted); }
   .branch__hours dd { margin: 0; }
+  .branch__tip { margin: 0 0 1rem; padding: 0.7rem 0.9rem; background: var(--cream); border-left: 2px solid var(--gold-fill); border-radius: var(--radius-btn); font-size: 0.9rem; color: var(--ink); }
   .branch__actions { margin-top: auto; padding-top: 1rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .branches__billing { margin-top: clamp(1rem, 3vw, 2rem); padding: 1.5rem clamp(1.4rem, 3vw, 2.2rem); background: var(--cream); border-radius: var(--radius); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; align-items: baseline; }
   .branches__billing h3 { font-size: 1rem; margin: 0; }

@@ -10,9 +10,11 @@ const { only, filters = true, headings = true, pageSize = 24 } = Astro.props;
 // The sale kitchen has its own page; it is not a customer realization
 const notRealizations = ['kuchyn-na-prodej'];
 
-const orderFeatured = <T,>(list: T[], featured: number[] = []) => {
+// Hand-picked photos first, then the rest; small old photos (under 1000 px wide) go last because they look soft
+const orderFeatured = <T extends { width: number }>(list: T[], featured: number[] = []) => {
   const first = featured.map((i) => list[i]).filter(Boolean);
-  return [...first, ...list.filter((x) => !first.includes(x))];
+  const rest = list.filter((x) => !first.includes(x));
+  return [...first, ...rest.filter((x) => x.width >= 1000), ...rest.filter((x) => x.width < 1000)];
 };
 const groups = await Promise.all(
   categories

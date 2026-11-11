@@ -83,5 +83,5 @@ export const categories: Category[] = [
     },
   },
   { slug: 'kuchyn-na-prodej', name: 'Kuchyň na prodej' },
-  { slug: 'detaily', name: 'Detaily' },
+  { slug: 'detaily', name: 'Vybavení a detaily' },
 ];

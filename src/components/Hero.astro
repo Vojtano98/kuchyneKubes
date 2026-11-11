@@ -20,7 +20,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     {slides.map((s, i) => (
       <div class:list={['hero__slide', { 'is-active': i === 0 }]} data-slide aria-hidden={i !== 0 ? 'true' : undefined}>
         <div class="hero__media">
-          <Image src={s.img} alt="" widths={[768, 1280, 1920, 2560]} sizes="100vw" loading={i === 0 ? 'eager' : 'lazy'} priority={i === 0} quality={78} />
+          <Image src={s.img} alt="" widths={[640, 768, 960, 1280, 1920, 2560]} sizes="100vw" loading={i === 0 ? 'eager' : 'lazy'} priority={i === 0} quality={78} />
         </div>
         <div class="container hero__content">
           <p class="hero__kicker">{s.kicker}</p>
