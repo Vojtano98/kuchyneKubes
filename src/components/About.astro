@@ -91,8 +91,21 @@ const stack = [kuchyne[88], kuchyne[185]];
     .contact-strip__actions .btn { min-width: 0; padding: 0.7rem 0.4rem; font-size: 0.72rem; letter-spacing: 0.05em; gap: 0.4rem; white-space: normal; text-align: center; }
     .contact-strip__actions .btn :global(svg) { width: 1.2em; height: 1.2em; }
   }
-  @media (max-width: 360px) {
+  /* The phone number never wraps; on the narrowest phones it gets a bit more room instead */
+  .contact-strip__actions .btn:first-child { white-space: nowrap; }
+  @media (max-width: 440px) {
+    .contact-strip { padding-inline: 0.9rem 0.8rem; }
+    .contact-strip__actions { gap: 0.4rem; }
+    .contact-strip__actions .btn { padding-inline: 0.25rem; letter-spacing: 0.02em; }
     .contact-strip__actions .btn :global(svg) { display: none; }
+  }
+  @media (max-width: 372px) {
+    .contact-strip__actions .btn { font-size: 0.66rem; letter-spacing: 0; white-space: nowrap; }
+  }
+  /* Smallest phones (320 px): one button per row, each on a single line */
+  @media (max-width: 345px) {
+    .contact-strip__actions { grid-template-columns: minmax(0, 1fr); }
+    .contact-strip__actions .btn { font-size: 0.72rem; letter-spacing: 0.1em; }
   }
   @media (max-width: 900px) {
     .about__grid { grid-template-columns: 1fr; }
